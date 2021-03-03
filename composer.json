@@ -8,5 +8,8 @@
       "name": "Vogusov Anton",
       "email": "vogusov@gmail.com"
     }
-  ]
+  ],
+  "require": {
+    "twig/twig": "^3.0"
+  }
 }

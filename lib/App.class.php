@@ -41,6 +41,7 @@ class App
             $controllerName = ucfirst($_GET['page']) . 'Controller';//IndexController
             $methodName = isset($_GET['action']) ? $_GET['action'] : 'index';
             $controller = new $controllerName();
+//            print_r($controller);
 
             //Ключи данного массива доступны в любой вьюшке
             //Массив data - это массив для использования в любой вьюшке
@@ -53,12 +54,10 @@ class App
             $view = $controller->view . '/' . $methodName . '.html';
 
             if (!isset($_GET['asAjax'])) {
-                $loader = new Twig_Loader_Filesystem(Config::get('path_templates'));
-                $twig = new Twig_Environment($loader);
-                $template = $twig->loadTemplate($view);
-                
+                $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
+                $twig = new \Twig\Environment($loader);
+                echo $template = $twig->render($view, $data);
 
-                echo $template->render($data);
             } else {
                 echo json_encode($data);
             }

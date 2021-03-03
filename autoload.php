@@ -1,6 +1,6 @@
 <?php
-require_once 'lib/Twig/Autoloader.php';
-Twig_Autoloader::register();
+require_once 'vendor/autoload.php';
+//Twig_Autoloader::register();
 
 spl_autoload_register("gbStandardAutoload");
 
