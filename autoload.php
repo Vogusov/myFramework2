@@ -1,6 +1,5 @@
 <?php
-require_once 'vendor/autoload.php';
-//Twig_Autoloader::register();
+require_once 'autoload.php';
 
 spl_autoload_register("gbStandardAutoload");
 
@@ -16,7 +15,7 @@ function gbStandardAutoload($className)
   ];
   $found = false;
   foreach ($dirs as $dir) {
-    $fileName = __DIR__ . '/' . $dir . '/' . $className . '.class.php';
+    $fileName = __DIR__ . '/' . $dir . '/' . $className . '.php';
     if (is_file($fileName)) {
 
       require_once($fileName);

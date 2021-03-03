@@ -1,11 +1,13 @@
 <?php
+namespace Fw2\Lib;
 
+require_once '../vendor/autoload.php';
 class App
 {
     public static function Init()
     {
         date_default_timezone_set('Europe/Moscow');
-        db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
+        Db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
 
         if (php_sapi_name() !== 'cli' && isset($_SERVER) && isset($_GET)) {
             self::web($_GET['path'] ? $_GET['path'] : '');
