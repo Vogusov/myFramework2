@@ -1,5 +1,9 @@
 <?php
 
+namespace Fw2\Model;
+
+use \Fw2\Base\Db as Db;
+
 class Category extends Model
 {
   protected static $table = 'categories';
@@ -19,7 +23,7 @@ class Category extends Model
   public static function getCategories($parentId = 0)
   {
     echo "Hello from db";
-    return db::getInstance()->Select(
+    return Db::getInstance()->Select(
       'SELECT id_category, name FROM categories WHERE status=:status AND parent_id = :parent_id',
       ['status' => Status::Active, 'parent_id' => $parentId]);
   }

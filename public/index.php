@@ -1,4 +1,6 @@
 <?php
-include '../app.php';
+
+include '../appStart.php';
 
 ?>
+

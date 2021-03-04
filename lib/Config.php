@@ -1,4 +1,5 @@
 <?php
+namespace Fw2\Base;
 
 class Config
 {
