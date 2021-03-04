@@ -1,4 +1,7 @@
 <?php
+namespace Fw2\Controller;
+
+use \Fw2\Base\Config as Config;
 
 class Controller
 {
