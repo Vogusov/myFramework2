@@ -1,13 +1,11 @@
 <?php
-//namespace Fw2;
 
 require_once __DIR__ . '/vendor/autoload.php';
-//require_once __DIR__ . '/lib/App.php';
 
 
 try {
 
- \Fw2\Base\App::init();
+ \Fw2\Core\Router::init();
   echo "initted";
 
 } catch (PDOException $e) {

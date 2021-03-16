@@ -2,51 +2,52 @@
 
 namespace Fw2\Model;
 
-use \Fw2\Base\Db as Db;
+use \Fw2\Core\Db as Db;
 
 abstract class Model
 {
 
   protected static $table;
-  protected static $properties = [
-    'id' => [
-      'type' => 'int',
-      'autoincrement' => true,
-      'readonly' => true,
-      'unsigned' => true
-    ],
-    'created_at' => [
-      'type' => 'datetime',
-      'readonly' => true,
-    ],
-    'updated_at' => [
-      'type' => 'datetime',
-      'readonly' => true,
-    ],
-    'status' => [
-      'type' => 'int',
-      'size' => 2,
-      'unsigned' => true
-    ]
-  ];
+//  protected static $properties = [
+//    'id' => [
+//      'type' => 'int',
+//      'autoincrement' => true,
+//      'readonly' => true,
+//      'unsigned' => true
+//    ],
+//    'created_at' => [
+//      'type' => 'datetime',
+//      'readonly' => true,
+//    ],
+//    'updated_at' => [
+//      'type' => 'datetime',
+//      'readonly' => true,
+//    ],
+//    'status' => [
+//      'type' => 'int',
+//      'size' => 2,
+//      'unsigned' => true
+//    ]
+//  ];
 
   public function __construct(array $values)
   {
-    static::setProperties();
+//    static::setProperties();
 
-    foreach ($values as $key => $value) {
-      $this->$key = $value;
-    }
+//    foreach ($values as $key => $value) {
+//      $this->$key = $value;
+//    }
   }
 
   /**
    * Вызывается в конструкторе и при генерации, чтобы дополнить базовый набор свойств
    */
-  protected static function setProperties()
-  {
-    return true;
-  }
+//  protected static function setProperties()
+//  {
+//    return true;
+//  }
 
+  /*
   public final static function generate()
   {
     if (self::tableExists())
@@ -78,7 +79,10 @@ abstract class Model
     Db::getInstance()->Query($query);
     return true;
   }
+  */
 
+
+  /*
   public function __get($name)
   {
     $this->checkProperty($name);
@@ -109,21 +113,22 @@ abstract class Model
       $this->$name = mb_substr($this->$name, 0, static::$properties[$name]['size']);
     }
   }
+  */
 
-  protected final static function tableExists()
-  {
-    return count(Db::getInstance()->select('SHOW TABLES LIKE "' . static::$table . '"')) > 0;
-  }
+//  protected final static function tableExists()
+//  {
+//    return count(Db::getInstance()->select('SHOW TABLES LIKE "' . static::$table . '"')) > 0;
+//  }
 
-  protected final function checkProperty($name)
-  {
-    if (!isset(static::$properties[$name])) {
-      throw new Exception('Undefined property ' . $name);
-    }
-    if (!isset(static::$properties[$name]['type'])) {
-      throw new Exception('Undefined type for property ' . $name);
-    }
-  }
+//  protected final function checkProperty($name)
+//  {
+//    if (!isset(static::$properties[$name])) {
+//      throw new Exception('Undefined property ' . $name);
+//    }
+//    if (!isset(static::$properties[$name]['type'])) {
+//      throw new Exception('Undefined type for property ' . $name);
+//    }
+//  }
 }
 
 ?>

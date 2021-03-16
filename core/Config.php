@@ -1,5 +1,5 @@
 <?php
-namespace Fw2\Base;
+namespace Fw2\Core;
 
 class Config
 {
@@ -8,7 +8,7 @@ class Config
     public static function get($parameter)
     {
         if (!isset(self::getCurrentConfiguration()[$parameter])) {
-            throw new Exception('Parameter ' . $parameter . ' does not exists');
+            throw new \Exception('Parameter ' . $parameter . ' does not exists');
         }
         return self::getCurrentConfiguration()[$parameter];
     }
@@ -27,10 +27,10 @@ class Config
             } else if (is_file($configDefault)) {
                 require_once $configDefault;
             } else {
-                throw new Exception('Unable to find configuration file');
+                throw new \Exception('Unable to find configuration file');
             }
             if (!isset($config) || !is_array($config)) {
-                throw new Exception('Unable to load configuration');
+                throw new \Exception('Unable to load configuration');
             }
             self::$configCache = $config;
         }

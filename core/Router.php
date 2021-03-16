@@ -1,12 +1,12 @@
 <?php
 
-namespace Fw2\Base;
+namespace Fw2\Core;
 
 use \Fw2\Model\Category as Category;
 
 require_once '../vendor/autoload.php';
 
-class App
+class Router
 {
   public static function Init()
   {
@@ -47,8 +47,8 @@ class App
       $controller = new $controllerName();
 //            print_r($controller);
 
-      //Ключи данного массива доступны в любой вьюшке
-      //Массив data - это массив для использования в любой вьюшке
+      // Ключи данного массива доступны в любой вьюшке
+      // Массив data - это массив для использования в любой вьюшке
       $data = [
         'content_data' => $controller->$methodName($_GET),
         'title' => $controller->title,
