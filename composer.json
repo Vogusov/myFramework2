@@ -15,7 +15,7 @@
 
   "autoload": {
     "psr-4": {
-      "Fw2\\Base\\": "lib/",
+      "Fw2\\Core\\": "core/",
       "Fw2\\Controller\\": "controller/",
       "Fw2\\Model\\": "model/"
     }

@@ -1,10 +1,14 @@
 <?php
+
+// база данных
 $config['db_user'] = 'root';
 $config['db_password'] = '';
 $config['db_base'] = 'test2';
 $config['db_host'] = 'localhost';
 $config['db_charset'] = 'UTF-8';
 
+
+// пути
 $config['path_root'] = __DIR__;
 $config['path_public'] = $config['path_root'] . '/../public';
 $config['path_model'] = $config['path_root'] . '/../model';
@@ -16,10 +20,12 @@ $config['path_migrations'] = $config['path_data'] . '/../migrate';
 $config['path_commands'] = $config['path_root'] . '/../lib/commands';
 $config['path_libs'] = $config['path_root'] . '/../lib';
 $config['path_templates'] = $config['path_root'] . '/../templates';
-
 $config['path_logs'] = $config['path_root'] . '/../logs';
 
-$config['sitename'] = 'Мой личный Интернет-магазин';
+
+// назваие сайта
+$config['sitename'] = 'myFramework2';
+
 
 // namespace
 $config['namespace_controller'] = 'Fw2\Controller\\';

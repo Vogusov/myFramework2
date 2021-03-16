@@ -1,5 +1,5 @@
 <?php
-namespace Fw2\Base;
+namespace Fw2\Core;
 
 
 class Db
@@ -7,6 +7,7 @@ class Db
   private static $_instance = null;
 
   private $db; // Ресурс работы с БД
+
 
   /*
    * Получаем объект для работы с БД
@@ -18,6 +19,7 @@ class Db
     }
     return self::$_instance;
   }
+
 
   /*
    * Запрещаем копировать объект
@@ -37,6 +39,7 @@ class Db
   private function __clone()
   {
   }
+
 
   /*
    * Выполняем соединение с базой данных
