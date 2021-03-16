@@ -7,11 +7,11 @@ use \Fw2\Core\Config as Config;
 class Controller
 {
   public $view;
-  public $title;
+  public $sitename;
 
   function __construct()
   {
-    $this->title = Config::get('sitename');
+    $this->sitename = Config::get('sitename');
   }
 
   public function index(array $data)

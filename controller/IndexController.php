@@ -3,25 +3,22 @@ namespace Fw2\Controller;
 
 class IndexController extends Controller
 {
-  public $view = 'index';
   public $title;
+  public $view;
+
 
   function __construct()
   {
     parent::__construct();
-    $this->title .= ' | Главная страница';
+    $this->title = 'Главная страница';
+    $this->view = 'index';
   }
 
   //метод, который отправляет в представление информацию в виде переменной content_data
   function index($data)
   {
-    return "Сработал {$data['page']} метод контролллера! Здесь должны отобразиться данные этой страницы!";
+    return "Добро пожаловать на наш сайт! Скоро здесь поя вится много интересного!";
   }
-
-  /*function test($id){
-
-    }
-*/
 
 }
 

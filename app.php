@@ -6,7 +6,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 try {
 
  \Fw2\Core\Router::init();
-  echo "initted";
 
 } catch (PDOException $e) {
   echo "DB is not available";

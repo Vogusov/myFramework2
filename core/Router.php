@@ -14,15 +14,18 @@ class Router
     Db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
 
     if (php_sapi_name() !== 'cli' && isset($_SERVER) && isset($_GET)) {
-      self::web($_GET['path'] ? $_GET['path'] : '');
+      self::run($_GET['path'] ? $_GET['path'] : '');
     }
   }
 
   //http://site.ru/index.php?path=News/delete/5
 
 
-  protected static function web($url)//РОУТЕР!!!
+  protected static function run($url)//РОУТЕР!!!
   {
+    /*
+     * Разбираем url на параметры
+     * */
     $url = explode("/", $url);
     if (!empty($url[0])) {
       $_GET['page'] = $url[0];//Часть имени класса контроллера
@@ -40,19 +43,23 @@ class Router
       $_GET['page'] = 'index';
     }
 
+    /*
+     * Определяем контроллер и исполняемый метод;
+     * На основании этого метода формируем массив $data для шаблонизатора Twig;
+     * Рендерим Twig.
+     * */
     if (isset($_GET['page'])) {
       $controllerName = Config::get('namespace_controller') . ucfirst($_GET['page']) . 'Controller';//IndexController
       $methodName = isset($_GET['action']) ? $_GET['action'] : 'index';
 
       $controller = new $controllerName();
-//            print_r($controller);
 
       // Ключи данного массива доступны в любой вьюшке
       // Массив data - это массив для использования в любой вьюшке
       $data = [
-        'content_data' => $controller->$methodName($_GET),
+        'sitename' => $controller->sitename,
         'title' => $controller->title,
-        'categories' => Category::getCategories(0)
+        'content_data' => $controller->$methodName($_GET),
       ];
 
       $view = $controller->view . '/' . $methodName . '.html';
