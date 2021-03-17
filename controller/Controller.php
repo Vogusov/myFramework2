@@ -6,7 +6,7 @@ use \Fw2\Core\Config as Config;
 
 class Controller
 {
-  public $view;
+  public $view; // название папки с шаблоном
   public $sitename;
 
   function __construct()

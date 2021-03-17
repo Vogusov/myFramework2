@@ -8,13 +8,13 @@ require_once '../vendor/autoload.php';
 
 class Router
 {
-  public static function Init()
+  public static function init()
   {
     date_default_timezone_set('Europe/Moscow');
     Db::getInstance()->Connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
 
     if (php_sapi_name() !== 'cli' && isset($_SERVER) && isset($_GET)) {
-      self::run($_GET['path'] ? $_GET['path'] : '');
+      self::run($_GET['path'] ?? '');
     }
   }
 
@@ -37,7 +37,10 @@ class Router
         }
         if (isset($url[2])) {//формальный параметр для метода контроллера
           $_GET['id'] = $url[2];
+          echo 'have 2; ';
         }
+      } else {
+        $_GET['action'] = 'index';
       }
     } else {
       $_GET['page'] = 'index';
@@ -50,7 +53,7 @@ class Router
      * */
     if (isset($_GET['page'])) {
       $controllerName = Config::get('namespace_controller') . ucfirst($_GET['page']) . 'Controller';//IndexController
-      $methodName = isset($_GET['action']) ? $_GET['action'] : 'index';
+      $methodName = $_GET['action'] ?? 'index';
 
       $controller = new $controllerName();
 
@@ -59,7 +62,7 @@ class Router
       $data = [
         'sitename' => $controller->sitename,
         'title' => $controller->title,
-        'content_data' => $controller->$methodName($_GET),
+        'content_data' => $controller->$methodName($_GET), // вызов метода контроллера с параметром (если есть)
       ];
 
       $view = $controller->view . '/' . $methodName . '.html';

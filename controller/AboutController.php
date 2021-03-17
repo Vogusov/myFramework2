@@ -1,21 +1,22 @@
 <?php
 namespace Fw2\Controller;
 
-class IndexController extends Controller
+class AboutController extends Controller
 {
   public $title;
 
   function __construct()
   {
     parent::__construct();
-    $this->title = 'Главная страница';
-    $this->view = 'index';
+    $this->title = 'О нас';
+    $this->view = 'about';
   }
 
   //метод, который отправляет в представление информацию в виде переменной content_data
+  //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
   function index($data)
   {
-    return "Добро пожаловать на наш сайт! Скоро здесь поя вится много интересного!";
+    return "Это страница c интересной информацией о нас и нашем магазине!";
   }
 
 }
