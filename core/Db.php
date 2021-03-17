@@ -43,8 +43,9 @@ class Db
 
   /*
    * Выполняем соединение с базой данных
+   * @return \PDO
    */
-  public function Connect($user, $password, $base, $host = 'localhost', $port = 3306)
+  public function connect($user, $password, $base, $host = 'localhost', $port = 3306)
   {
     // Формируем строку соединения с сервером
     $connectString = 'mysql:host=' . $host . ';port= ' . $port . ';dbname=' . $base . ';charset=UTF8;';
@@ -56,26 +57,85 @@ class Db
     );
   }
 
-  /*
-   * Выполнить запрос к БД
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return \PDOStatement
    */
-  public function Query($query, $params = array())
+  private static function query(string $query, array $args)
   {
-    $res = $this->db->prepare($query);
-    $res->execute($params);
-    return $res;
+    echo "<pre>" . $query . "</pre>";
+    $sth = self::getInstance()->prepare($query);
+    $sth->execute($args);
+    if ($sth) {
+      return $sth;
+    } else {
+      echo "Выполнить запрос к БД не удалось";
+    }
+
   }
 
-  /*
-   * Выполнить запрос с выборкой данных
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return array
    */
-  public function Select($query, $params = array())
+  public function select(string $query, array $args)
   {
-    $result = $this->Query($query, $params);
-    if ($result) {
-      return $result->fetchAll();
-    }
+    return self::query($query, $args)->fetchAll();
   }
+
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return array
+   */
+  public static function getRow(string $query, array $args)
+  {
+    return self::query($query, $args)->fetch();
+  }
+
+
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return integer ID
+   */
+  public static function insert(string $query, array $args)
+  {
+    self::query($query, $args);
+    return self::getInstance()->lastInsertId();
+  }
+
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return integer affected rows
+   */
+  public static function update(string $query, array $args)
+  {
+    $stmt = self::query($query, $args);
+    return $stmt->rowCount();
+  }
+
+  /**
+   *
+   * @param string $query
+   * @param array $args
+   * @return integer affected rows
+   */
+  public static function delete(string $query, array $args)
+  {
+    $stmt = self::query($query, $args);
+    return $stmt->rowCount();
+  }
+
+
 }
 
 ?>
