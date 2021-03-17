@@ -3,7 +3,6 @@ namespace Fw2\Controller;
 
 class AboutController extends Controller
 {
-  public $title;
 
   function __construct()
   {

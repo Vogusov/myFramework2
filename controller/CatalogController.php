@@ -3,7 +3,6 @@ namespace Fw2\Controller;
 
 class CatalogController extends Controller
 {
-  public $title;
 
   function __construct()
   {

@@ -6,16 +6,20 @@ use \Fw2\Core\Config as Config;
 
 class Controller
 {
-  public $view; // название папки с шаблоном
-  public $sitename;
+  public string $view; // название папки с шаблоном
+  public string $sitename;
+  public string $title;
 
-  function __construct()
+  public function __construct()
   {
     $this->sitename = Config::get('sitename');
+//    $this->title = '';
+
   }
 
   public function index(array $data)
   {
     return [];
   }
+
 }

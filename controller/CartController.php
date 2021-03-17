@@ -3,7 +3,6 @@ namespace Fw2\Controller;
 
 class CartController extends Controller
 {
-  public $title;
 
   function __construct()
   {
@@ -16,7 +15,7 @@ class CartController extends Controller
   //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
   function index($data)
   {
-    return "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog\">магазине</a>";
+    return "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>";
   }
 
 }
