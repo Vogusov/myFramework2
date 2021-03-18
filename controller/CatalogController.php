@@ -8,14 +8,21 @@ class CatalogController extends Controller
   {
     parent::__construct();
     $this->title = 'Каталог';
-    $this->view = 'catalog';
+    $this->view = 'catalog/index.html';
   }
 
-  //метод, который отправляет в представление информацию в виде переменной content_data
-  //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
+  /**
+   * @param array $data
+   * @return array ['sitename', 'content_data', 'title', 'view']
+   * */
   function index($data)
   {
-    return "Это страница католога! Скоро здесь будет отображаться {$data['id']} товаров!";
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => "Это страница католога! Скоро здесь будет отображаться {$data['id']} товаров!",
+      'title' => $this->title,
+      'view' => $this->view
+    ];
   }
 
 }
