@@ -13,7 +13,6 @@ class Controller
   public function __construct()
   {
     $this->sitename = Config::get('sitename');
-//    $this->title = '';
 
   }
 

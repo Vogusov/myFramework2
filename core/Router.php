@@ -12,10 +12,6 @@ class Router
   public static function init()
   {
     Db::getInstance()->connect(Config::get('db_user'), Config::get('db_password'), Config::get('db_base'));
-//
-//    echo "<br>DB0: ";
-//    print_r( Db::getInstance());
-
 
     if (php_sapi_name() !== 'cli' && isset($_SERVER) && isset($_GET)) {
       self::run($_GET['path'] ?? '');
@@ -25,9 +21,9 @@ class Router
   //http://site.ru/index.php?path=News/delete/5
 
 
-  protected static function run($url)//РОУТЕР!!!
+  protected static function run($url)  //РОУТЕР!!!
   {
-    /*
+    /**
      * Разбираем url на параметры
      * */
     $url = explode("/", $url);
@@ -50,9 +46,11 @@ class Router
     }
 
 
-    /*
+    /**
      * Определяем контроллер и исполняемый метод;
+     * Запускаем Метод контроллера
      * На основании этого метода формируем массив $data для шаблонизатора Twig;
+     * $data = ['sitename', 'content_data', 'title', 'view']
      * Рендерим Twig.
      * */
     if (isset($_GET['page'])) {
@@ -60,28 +58,35 @@ class Router
       $methodName = $_GET['action'] ?? 'index';
 
       $controller = new $controllerName();
+      $data = $controller->$methodName($_GET); // Массив сданными для представления шаблонизатору
+      $view = $data['view']; // строка. Путь до шаблона.
 
-      // Ключи данного массива доступны в любой вьюшке
-      // Массив data - это массив для использования в любой вьюшке
+      $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
+      $twig = new \Twig\Environment($loader);
+      echo $template = $twig->render($view, $data);
+
+
+
+      /**
+       *  Ключи данного массива доступны в любой вьюшке
+      // Массив data ВОЗВРАЩАЕТСЯ ИЗ КОНТРОЛЛЕРА!!!
+       */
+       /*
       $data = [
         'sitename' => $controller->sitename,
         'content_data' => $controller->$methodName($_GET), // вызов метода контроллера с параметром (если есть)
         'title' => $controller->title,
+        'VIEW' = $controller->view . '/' . $methodName . '.html';
       ];
       print_r($data);
-      $view = $controller->view . '/' . $methodName . '.html';
 
-      echo "<br>DB: ";
-     print_r( Db::getInstance());
+      */
 
-      if (!isset($_GET['asAjax'])) {
-        $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
-        $twig = new \Twig\Environment($loader);
-        echo $template = $twig->render($view, $data);
 
-      } else {
-        echo json_encode($data);
-      }
+
+
+
+
     }
   }
 

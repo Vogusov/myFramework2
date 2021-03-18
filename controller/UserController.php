@@ -13,7 +13,7 @@ class UserController extends Controller
   }
 
   //метод, который отправляет в представление информацию в виде переменной content_data
-  //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
+  //параметр data -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
   function login($data)
   {
     echo "Hello";
@@ -24,8 +24,21 @@ class UserController extends Controller
   function registration($data)
   {
     $this->title = 'Регистрация';
+
+    if (isset($_POST['reg'])) {
+
+    } else {
+      return "Введите данные для регистрации: ";
+    }
+
+  }
+
+  function registrate($data)
+  {
+    $this->title = 'Регистрация';
     return "Введите данные для регистрации: ";
   }
+
 
 }
 
