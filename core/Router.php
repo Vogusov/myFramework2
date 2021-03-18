@@ -3,7 +3,6 @@
 namespace Fw2\Core;
 
 use Fw2\Core\Db as Db;
-use \Fw2\Model\Category as Category;
 
 require_once '../vendor/autoload.php';
 
@@ -35,7 +34,7 @@ class Router
         } else {
           $_GET['action'] = $url[1];//часть имени метода
         }
-        if (!empty($url[2 ])) {//формальный параметр для метода контроллера
+        if (!empty($url[2])) {//формальный параметр для метода контроллера
           $_GET['id'] = $url[2];
         }
       } else {
@@ -58,33 +57,45 @@ class Router
       $methodName = $_GET['action'] ?? 'index';
 
       $controller = new $controllerName();
-      $data = $controller->$methodName($_GET); // Массив сданными для представления шаблонизатору
-      $view = $data['view']; // строка. Путь до шаблона.
+
+      $data = $controller->$methodName($_GET); // Массив с данными для представления шаблонизатору
+
+      if (!empty($data)) {
+        if (!empty($data['view'])) {
+          $view = $data['view']; // строка. Путь до шаблона.
+        } else {
+          echo "view is empty!!!";
+        }
+
+//        foreach($data as $key => $value) {
+//          if (!array_key_exists($key, $data) && $key !== 0){
+//            echo "Не хватает \"$key\" в массиве данных для полного счастья";
+//          } else {
+//            echo "\"$key\" есть! ";
+//          }
+//        }
+
+      }
 
       $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
       $twig = new \Twig\Environment($loader);
       echo $template = $twig->render($view, $data);
 
 
-
       /**
        *  Ключи данного массива доступны в любой вьюшке
-      // Массив data ВОЗВРАЩАЕТСЯ ИЗ КОНТРОЛЛЕРА!!!
+       * Массив data ВОЗВРАЩАЕТСЯ ИЗ КОНТРОЛЛЕРА!!!
        */
-       /*
-      $data = [
-        'sitename' => $controller->sitename,
-        'content_data' => $controller->$methodName($_GET), // вызов метода контроллера с параметром (если есть)
-        'title' => $controller->title,
-        'VIEW' = $controller->view . '/' . $methodName . '.html';
-      ];
-      print_r($data);
+      /*
+     $data = [
+       'sitename' => $controller->sitename,
+       'content_data' => $controller->$methodName($_GET), // вызов метода контроллера с параметром (если есть)
+       'title' => $controller->title,
+       'VIEW' = $controller->view . '/' . $methodName . '.html';
+     ];
+     print_r($data);
 
-      */
-
-
-
-
+     */
 
 
     }

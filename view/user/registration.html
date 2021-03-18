@@ -5,11 +5,14 @@
 {{title}}
 {% endblock %}
 
+
 {% block content %}
+
+{{ content_data.message }}
 
 <form action="index.php?path=user/registration" method="post">
   <fieldset>
-    <legend>Данные для авторизации</legend>
+    <legend>Данные для регистрации</legend>
     <p>Введите свой логин:</p>
     <p><input type="text" name="login" value="" required/></p>
     <p>Введите свой пароль:</p>

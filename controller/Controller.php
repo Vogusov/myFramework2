@@ -21,4 +21,17 @@ class Controller
     return [];
   }
 
+  protected function isGet()
+  {
+    return $_SERVER['REQUEST_METHOD'] == 'GET';
+  }
+
+  //
+  // Запрос произведен методом POST?
+  //
+  protected function isPost()
+  {
+    return $_SERVER['REQUEST_METHOD'] == 'POST';
+  }
+
 }
