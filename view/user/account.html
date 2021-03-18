@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+{% block content %}
+
+<h3>Добро пожаловать {{content_data.name}}!</h3>
+<p>login: {{content_data.login}}</p>
+<p>email: {{content_data.email}}</p>
+<p>phone: {{content_data.phone}}</p>
+
+{% endblock %}
+
+

@@ -52,7 +52,8 @@ class Db
     $this->db = new \PDO($connectString, $user, $password,
       [
         \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC, // возвращать ассоциативные массивы
-        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION // возвращать Exception в случае ошибки
+        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION, // возвращать Exception в случае ошибки
+        \PDO::ATTR_EMULATE_PREPARES => true // за подготовку отвечает PDO
       ]
     );
   }
@@ -63,10 +64,10 @@ class Db
    * @param array $args
    * @return \PDOStatement
    */
-  private static function query(string $query, array $args)
+  private function query(string $query, array $args)
   {
     echo "<pre>" . $query . "</pre>";
-    $sth = self::getInstance()->prepare($query);
+    $sth = $this->db->prepare($query);
     $sth->execute($args);
     if ($sth) {
       return $sth;
@@ -84,7 +85,7 @@ class Db
    */
   public function select(string $query, array $args)
   {
-    return self::query($query, $args)->fetchAll();
+    return $this->query($query, $args)->fetchAll();
   }
 
   /**
@@ -93,9 +94,9 @@ class Db
    * @param array $args
    * @return array
    */
-  public static function getRow(string $query, array $args)
+  public function getRow(string $query, array $args)
   {
-    return self::query($query, $args)->fetch();
+    return $this->query($query, $args)->fetch();
   }
 
 
@@ -105,10 +106,10 @@ class Db
    * @param array $args
    * @return integer ID
    */
-  public static function insert(string $query, array $args)
+  public function insert(string $query, array $args)
   {
-    self::query($query, $args);
-    return self::getInstance()->lastInsertId();
+    $this->query($query, $args);
+    return $this->db->lastInsertId();
   }
 
   /**
@@ -117,10 +118,9 @@ class Db
    * @param array $args
    * @return integer affected rows
    */
-  public static function update(string $query, array $args)
+  public function update(string $query, array $args)
   {
-    $stmt = self::query($query, $args);
-    return $stmt->rowCount();
+    return $this->query($query, $args)->rowCount();
   }
 
   /**
@@ -129,12 +129,10 @@ class Db
    * @param array $args
    * @return integer affected rows
    */
-  public static function delete(string $query, array $args)
+  public function delete(string $query, array $args)
   {
-    $stmt = self::query($query, $args);
-    return $stmt->rowCount();
+    return $this->query($query, $args)->rowCount();
   }
-
 
 }
 
