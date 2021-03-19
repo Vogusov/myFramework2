@@ -23,8 +23,8 @@ class UserController extends Controller
   function login($data)
   {
     if ($this->isPost() && isset($_POST['auth'])) {
-      $user = new User();
-      $login = trim(strip_tags($_POST['login']));
+//      $user = new User();
+//      $login = trim(strip_tags($_POST['login']));
 
       return [
         'sitename' => $this->sitename,
@@ -38,6 +38,7 @@ class UserController extends Controller
         'view' => 'user/account.html'
       ];
     } else {
+
       return [
         'sitename' => $this->sitename,
         'content_data' => "Войдите или зарегистрируйтесь!",
@@ -54,47 +55,46 @@ class UserController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function registration($data)
+  function signup($data)
   {
-    if ($this->isPost() && isset($_POST['reg'])) {
+    if (isset($_POST['reg'])) {
+      $data = $_POST;
       $user = new User();
 
-      if ($user->registrate($_POST)) {
-        echo "Зарегистрировался пользователь с ID: $result!";
-        return [
-          'sitename' => $this->sitename,
-          'content_data' => [
-            'message' => 'Вы успешно зарегистрировались! Теперь войдите в свой аккакнт: ',
-          ],
-          'title' => 'Вход',
-          'view' => 'user/login.html'
-        ];
+      if ($result = $user->registrate($data)) {
 
-      } else {
-        return [
-          'sitename' => $this->sitename,
-          'content_data' => [
-            'message' => 'Пользователь с таким логином уже существует! ',
-          ],
-          'title' => 'Регистрация',
-          'view' => 'user/registration.html'
-        ];
+        if ($result['success']) {
+          return [
+            'sitename' => $this->sitename,
+            'content_data' => [
+              'message' => "Вы успешно зарегистрировались c ID: {$result['id']}! Теперь войдите в свой аккакнт: ",
+            ],
+            'title' => 'Вход',
+            'view' => 'user/login.html'
+          ];
+
+        } else {
+          return [
+            'sitename' => $this->sitename,
+            'content_data' => [
+              'message' => array_shift($result),
+            ],
+            'title' => 'Регистрация',
+            'view' => 'user/registration.html'
+          ];
+        }
       }
-
-    } else {
+    } // если нет поста, отображается страница регистрации по умолчанию
+    else {
       return [
         'sitename' => $this->sitename,
         'content_data' => [
-          'message' => 'Вы успешно зарегистрировались! Теперь войдите в свой аккакнт: ',
+          'message' => 'Зарегистрируйтесь на нашем сайте. Пожалуйста: ',
         ],
         'title' => 'Регистрация',
         'view' => 'user/registration.html'
       ];
-
-
     }
-
-
   }
+
 }
-//site/index.php?path=index/test/5
