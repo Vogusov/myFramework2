@@ -8,13 +8,21 @@ class IndexController extends Controller
   {
     parent::__construct();
     $this->title = 'Главная страница';
-    $this->view = 'index';
+    $this->view = 'index/index.html';
   }
 
-  //метод, который отправляет в представление информацию в виде переменной content_data
-  function index($data)
+  /**
+   * @param array $data
+   * @return array ['sitename', 'content_data', 'title', 'view']
+   * */
+  function index(array $data)
   {
-    return "Добро пожаловать на наш сайт! Скоро здесь поя вится много интересного!";
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => 'Добро пожаловать на наш сайт! Скоро здесь появится много интересного!',
+      'title' => $this->title,
+      'view' => $this->view
+    ];
   }
 
 }

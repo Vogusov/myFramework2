@@ -8,16 +8,22 @@ class CartController extends Controller
   {
     parent::__construct();
     $this->title = 'Корзина';
-    $this->view = 'cart';
+    $this->view = 'cart/index.html';
   }
 
-  //метод, который отправляет в представление информацию в виде переменной content_data
-  //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
+  /**
+   * @param array $data
+   * @return array ['sitename', 'content_data', 'title', 'view']
+   * */
   function index($data)
   {
-    return "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>";
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>",
+      'title' => $this->title,
+      'view' => $this->view
+    ];
   }
-
 }
 
 //site/index.php?path=index/test/5

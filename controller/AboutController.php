@@ -8,14 +8,21 @@ class AboutController extends Controller
   {
     parent::__construct();
     $this->title = 'О нас';
-    $this->view = 'about';
+    $this->view = 'about/index.html';
   }
 
-  //метод, который отправляет в представление информацию в виде переменной content_data
-  //параметр -> GET Array([path]=>Catalog/index/6 [page]=>Catalog [action]=>index [id]=>6 )
+  /**
+   * @param array $data
+   * @return array ['sitename', 'content_data', 'title', 'view']
+   * */
   function index($data)
   {
-    return "Это страница c интересной информацией о нас и нашем магазине!";
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => "Это страница c интересной информацией о нас и нашем магазине!",
+      'title' => $this->title,
+      'view' => $this->view
+    ];
   }
 
 }
