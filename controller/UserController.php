@@ -20,28 +20,35 @@ class UserController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function login($data)
+  function login()
   {
-    if ($this->isPost() && isset($_POST['auth'])) {
-//      $user = new User();
-//      $login = trim(strip_tags($_POST['login']));
+    if (isset($_POST['auth'])) {
+      $data = $_POST;
+      $user = new User();
+      if ($result = $user->login($data)) {
+        return [
+          'sitename' => $this->sitename,
+          'content_data' => [
+            'login' => $_POST['login'],
+//            'name' => $_SESSION['name'],
+            'email' => $_SESSION['email'],
+            'phone' => $_SESSION['phone'],
+          ],
+          'title' => 'Личный кабинет',
+          'view' => 'user/account.html'
+        ];
 
-      return [
-        'sitename' => $this->sitename,
-        'content_data' => [
-          'name' => $_POST['login'],
-          'login' => $_POST['login'],
-          'email' => 'test',
-          'phone' => '777888'
-        ],
-        'title' => 'Личный кабинет',
-        'view' => 'user/account.html'
-      ];
+
+      }
     } else {
 
       return [
         'sitename' => $this->sitename,
-        'content_data' => "Войдите или зарегистрируйтесь!",
+        'content_data' => [
+          'message' => 'Вы не смогли войти.',
+          'login' => $_POST['login']
+
+        ],
         'title' => 'Вход',
         'view' => $this->view
       ];
@@ -55,7 +62,7 @@ class UserController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function signup($data)
+  function signup()
   {
     if (isset($_POST['reg'])) {
       $data = $_POST;
@@ -78,6 +85,10 @@ class UserController extends Controller
             'sitename' => $this->sitename,
             'content_data' => [
               'message' => array_shift($result),
+              'login' => $_POST['login'],
+              'name' => $_POST['name'],
+              'email' => $_POST['email'],
+              'phone' => $_POST['phone'],
             ],
             'title' => 'Регистрация',
             'view' => 'user/registration.html'
