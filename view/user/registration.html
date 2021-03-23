@@ -5,15 +5,20 @@
 {{title}}
 {% endblock %}
 
+
 {% block content %}
 
-<form action="index.php?path=user/registration" method="post">
+{{ content_data.message }}
+
+<form method="post">
   <fieldset>
-    <legend>Данные для авторизации</legend>
+    <legend>Данные для регистрации</legend>
     <p>Введите свой логин:</p>
-    <p><input type="text" name="login" value="" required/></p>
+    <p><input type="text" name="login" value="{{ app.request.request.post('login') }}" required/></p>
     <p>Введите свой пароль:</p>
     <p><input type="password" name="password" value="" required/></p>
+    <p>Введите повторно свой пароль :</p>
+    <p><input type="password" name="password2" value="" required/></p>
   </fieldset>
   
   <fieldset>

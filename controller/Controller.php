@@ -13,13 +13,25 @@ class Controller
   public function __construct()
   {
     $this->sitename = Config::get('sitename');
-//    $this->title = '';
 
   }
 
   public function index(array $data)
   {
     return [];
+  }
+
+  protected function isGet()
+  {
+    return $_SERVER['REQUEST_METHOD'] == 'GET';
+  }
+
+  //
+  // Запрос произведен методом POST?
+  //
+  protected function isPost()
+  {
+    return $_SERVER['REQUEST_METHOD'] == 'POST';
   }
 
 }
