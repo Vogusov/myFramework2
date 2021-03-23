@@ -20,28 +20,41 @@ class UserController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function login($data)
+  public function login()
   {
-    if ($this->isPost() && isset($_POST['auth'])) {
-//      $user = new User();
-//      $login = trim(strip_tags($_POST['login']));
+    if (isset($_POST['auth'])) {
+      $data = $_POST;
+      $user = new User();
 
+      if ($result = $user->auth($data)) {
+        if ($result['success']) {
+          return [
+            'sitename' => $this->sitename,
+            'content_data' => [],
+            'title' => 'Личный кабинет',
+            'view' => 'user/account.html'
+          ];
+
+          // если не success, то оставляем на этой же странице
+        } else {
+          return [
+            'sitename' => $this->sitename,
+            'content_data' => [
+              'message' => $result['message'],
+            ],
+            'title' => 'Вход',
+            'view' => $this->view
+          ];
+        }
+      }
+
+      // Если нет поста, то открываем страницу входа!
+    } else {
       return [
         'sitename' => $this->sitename,
         'content_data' => [
-          'name' => $_POST['login'],
-          'login' => $_POST['login'],
-          'email' => 'test',
-          'phone' => '777888'
+          'message' => 'Войдите или зарегистрируйтесь.',
         ],
-        'title' => 'Личный кабинет',
-        'view' => 'user/account.html'
-      ];
-    } else {
-
-      return [
-        'sitename' => $this->sitename,
-        'content_data' => "Войдите или зарегистрируйтесь!",
         'title' => 'Вход',
         'view' => $this->view
       ];
@@ -50,12 +63,39 @@ class UserController extends Controller
   }
 
 
+
+  public function logout() {
+    $user = new User();
+    if($user->logout()){
+      return [
+        'sitename' => $this->sitename,
+        'view' => 'index/index.html',
+        'content_data' => [
+          'message' => "Вы вышли из аккаунта! ",
+        ],
+      ];
+    }
+
+  }
+
+  public function account() {
+    return [
+        'sitename' => $this->sitename,
+        'view' => 'user/account.html',
+      'title' => 'Личный кабинет',
+        'content_data' => [],
+      ];
+    }
+
+
+
+
   /**
    * Регистрация нового пользователя
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function signup($data)
+  public function signup()
   {
     if (isset($_POST['reg'])) {
       $data = $_POST;
@@ -78,6 +118,10 @@ class UserController extends Controller
             'sitename' => $this->sitename,
             'content_data' => [
               'message' => array_shift($result),
+              'login' => $_POST['login'],
+              'name' => $_POST['name'],
+              'email' => $_POST['email'],
+              'phone' => $_POST['phone'],
             ],
             'title' => 'Регистрация',
             'view' => 'user/registration.html'

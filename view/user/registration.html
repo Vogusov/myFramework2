@@ -14,7 +14,7 @@
   <fieldset>
     <legend>Данные для регистрации</legend>
     <p>Введите свой логин:</p>
-    <p><input type="text" name="login" value="{{ app.request.request.post('login') }}" required/></p>
+    <p><input type="text" name="login" value="{{ content_data.login }}" required/></p>
     <p>Введите свой пароль:</p>
     <p><input type="password" name="password" value="" required/></p>
     <p>Введите повторно свой пароль :</p>
@@ -25,11 +25,11 @@
     <legend>Контактные данные</legend>
     
     <p>Ваше имя:</p>
-    <p><input type="text" name="name" value="" required/></p>
+    <p><input type="text" name="name" value="{{ content_data.name }}" required/></p>
     <p>Ваш E-mail для связи:</p>
-    <p><input type="email" name="email" value="" required/></p>
+    <p><input type="email" name="email" value="{{ content_data.email }}" required/></p>
     <p>Ваш телефон для связи:</p>
-    <p><input type="tel" name="phone" value="" required/></p>
+    <p><input type="tel" name="phone" value="{{ content_data.phone }}" required/></p>
   
   </fieldset>
   

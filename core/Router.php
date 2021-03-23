@@ -79,6 +79,7 @@ class Router
 
       $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
       $twig = new \Twig\Environment($loader);
+      $twig->addGlobal('session', $_SESSION);
       echo $template = $twig->render($view, $data);
 
 
