@@ -19,7 +19,9 @@ class IndexController extends Controller
   {
     return [
       'sitename' => $this->sitename,
-      'content_data' => 'Добро пожаловать на наш сайт! Скоро здесь появится много интересного!',
+      'content_data' => [
+        'text' => 'Добро пожаловать на наш сайт! Скоро здесь появится много интересного!'
+      ],
       'title' => $this->title,
       'view' => $this->view
     ];

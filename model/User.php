@@ -16,7 +16,7 @@ class User
   }
 
 
-// хэширование пароля
+  // хэширование пароля
   protected function hashUserPassword($password)
   {
     return password_hash($password, PASSWORD_BCRYPT);
@@ -107,7 +107,6 @@ class User
   }
 
 
-
 // записываем в БД нового поьзователя
   public function registrate(array $data)
   {
@@ -115,19 +114,56 @@ class User
     if ($this->success) {
       $login = $validatedData['login'];
       $name = $validatedData['name'];
-      $password = $validatedData['password'];
+      $password = $this->hashUserPassword($data['password']);
       $email = $validatedData['email'];
       $phone = $validatedData['phone'];
 
       $validatedData['success'] = $this->success;
-      $validatedData['id'] =  Db::getInstance()->insert(
+      $validatedData['id'] = Db::getInstance()->insert(
         'insert into `users` (`login`, `name`, `password`, `email`, `phone`) values (:login, :name, :password, :email, :phone)',
         ['login' => $login, 'name' => $name, 'password' => $password, 'email' => $email, 'phone' => $phone]);
       return $validatedData;
     } else {
-      $validatedData['success'] = $this->success;
+      $validatedData['success'] = $this->success = false;
       echo "Не зарегались(((";
       return $validatedData;
     }
   }
+
+
+// Вход пользователя под учетной записью
+  public function auth(array $data)
+  {
+    if ($user = $this->loginExists(trim($data['login']))) {
+      echo "Есть юзер с таким логином {$user['login']}. Его ID: {$user['id']}! ";
+
+      if (password_verify($data['password'], $user['password'])) {
+        $_SESSION['logged_user'] = $user;
+        echo 'Пароли совпали! ';
+        print_r($_SESSION['logged_user']);
+
+        $result['success'] = $this->success = true;
+        return $result;
+
+      } else {
+        echo 'пароль неверен <br>';
+        $result['success'] = $this->success = false;
+        $result['message'] = 'Пароль неверен';
+        return $result;
+      }
+    } else {
+      $result['success'] = $this->success = false;
+      $result['message'] = 'Пользователя с таким логином нет';
+      return $result;
+
+    }
+  }
+
+  public function logout()
+  {
+    unset($_SESSION['logged_user']);
+    return true;
+  }
+
+
 }
