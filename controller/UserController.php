@@ -20,7 +20,7 @@ class UserController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  public function login()
+  public function login(array $data)
   {
     if (isset($_POST['auth'])) {
       $data = $_POST;
@@ -50,7 +50,7 @@ class UserController extends Controller
 
       // Если нет поста, то открываем страницу входа!
     } else {
-      return [
+      $result = [
         'sitename' => $this->sitename,
         'content_data' => [
           'message' => 'Войдите или зарегистрируйтесь.',
@@ -58,15 +58,21 @@ class UserController extends Controller
         'title' => 'Вход',
         'view' => $this->view
       ];
+      if ($data['success']) {
+        $result['content_data']['message'] = 'Вы успешно зарегистрировались, войдите под своим именем!';
+      }
+      echo 'Result из login: ';
+      print_r($result);
+      return $result;
     }
 
   }
 
 
-
-  public function logout() {
+  public function logout()
+  {
     $user = new User();
-    if($user->logout()){
+    if ($user->logout()) {
       return [
         'sitename' => $this->sitename,
         'view' => 'index/index.html',
@@ -75,19 +81,18 @@ class UserController extends Controller
         ],
       ];
     }
-
   }
 
-  public function account() {
+
+  public function account()
+  {
     return [
-        'sitename' => $this->sitename,
-        'view' => 'user/account.html',
+      'sitename' => $this->sitename,
+      'view' => 'user/account.html',
       'title' => 'Личный кабинет',
-        'content_data' => [],
-      ];
-    }
-
-
+      'content_data' => [],
+    ];
+  }
 
 
   /**
@@ -104,14 +109,17 @@ class UserController extends Controller
       if ($result = $user->registrate($data)) {
 
         if ($result['success']) {
-          return [
-            'sitename' => $this->sitename,
-            'content_data' => [
-              'message' => "Вы успешно зарегистрировались c ID: {$result['id']}! Теперь войдите в свой аккакнт: ",
-            ],
-            'title' => 'Вход',
-            'view' => 'user/login.html'
-          ];
+          echo 'Есть результат! ';
+          print_r($result);
+          return $this->login($result);
+//            [
+//            'sitename' => $this->sitename,
+//            'content_data' => [
+//              'message' => "Вы успешно зарегистрировались c ID: {$result['id']}! Теперь войдите в свой аккакнт: ",
+//            ],
+//            'title' => 'Вход',
+//            'view' => 'user/login.html'
+//          ];
 
         } else {
           return [

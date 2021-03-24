@@ -60,8 +60,12 @@ class Router
 
       $data = $controller->$methodName($_GET); // Массив с данными для представления шаблонизатору
 
+      echo 'Полученная data из контроллера: ';
+      print_r($data);
+
       if (!empty($data)) {
         if (!empty($data['view'])) {
+          echo 'Вью из контроллера: '; print_r($data['view']);
           $view = $data['view']; // строка. Путь до шаблона.
         } else {
           echo "view is empty!!!";
@@ -75,6 +79,8 @@ class Router
 //          }
 //        }
 
+      } else {
+        echo 'Дата пуста((( ';
       }
 
       $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
