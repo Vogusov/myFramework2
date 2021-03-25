@@ -5,6 +5,32 @@
 {{title}}
 {% endblock %}
 
+
 {% block content %}
-{{content_data}}
+
+{{content_data.message}}
+
+<div class="goods">
+  
+  {% for product_item in content_data.products %}
+  
+  <ul>
+    <li>{{ loop.index }} - {{ product_item.id }} - {{ product_item.name }}</li>
+    <li>{{ product_item.price }}</li>
+    <li>{{ product_item.description }}</li>
+    <li><a href="/index.php?path=catalog/product/{{ product_item.id }}">
+      {{ product_item.img }}
+    </a>
+    </li>
+    <li>{{ product_item.category }}</li>
+    <li>{{ product_item.status }}</li>
+  </ul>
+  <button data-id="{{ product_item.id }}">В корзину</button>
+  
+  {% else %}
+  <p>No products have been found.</p>
+  {% endfor %}
+
+</div>
+
 {% endblock %}

@@ -1,5 +1,8 @@
 <?php
+
 namespace Fw2\Controller;
+
+use Fw2\Model\Goods as Goods;
 
 class CatalogController extends Controller
 {
@@ -15,13 +18,34 @@ class CatalogController extends Controller
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  function index($data)
+  function index(array $data = [])
   {
+    $id = !isset($data['id']) ? 10 : $data['id'];
+    $goods = Goods::getAllGoods();
+
     return [
       'sitename' => $this->sitename,
-      'content_data' => "Это страница католога! Скоро здесь будет отображаться {$data['id']} товаров!",
+      'content_data' => [
+        'message' => "Это страница католога! Скоро здесь будет отображаться $id товаров!",
+      'products' => $goods,
+      ],
       'title' => $this->title,
       'view' => $this->view
+    ];
+  }
+
+  function product($data) {
+    $product = Goods::getProduct($data['id']);
+    print_r($product);
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => [
+        'id' => $data['id'],
+        'message' => "Это страница товара {$product['name']}!",
+        'product' => $product,
+      ],
+      'title' => $product['name'],
+      'view' => 'catalog/product.html'
     ];
   }
 

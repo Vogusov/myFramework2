@@ -68,8 +68,8 @@ class UserController extends Controller
       if ($data['success']) {
         $result['content_data']['message'] = 'Вы успешно зарегистрировались, войдите под своим именем!';
       }
-      echo 'Result из login: ';
-      print_r($result);
+//      echo 'Result из login: ';
+//      print_r($result);
       return $result;
     }
 
