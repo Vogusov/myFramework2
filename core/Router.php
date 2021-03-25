@@ -60,25 +60,16 @@ class Router
 
       $data = $controller->$methodName($_GET); // Массив с данными для представления шаблонизатору
 
-      echo 'Полученная data из контроллера: ';
-      print_r($data);
+//      echo 'Полученная data из контроллера: ';
+//      print_r($data);
 
       if (!empty($data)) {
         if (!empty($data['view'])) {
-          echo 'Вью из контроллера: '; print_r($data['view']);
+//          echo 'Вью из контроллера: '; print_r($data['view']);
           $view = $data['view']; // строка. Путь до шаблона.
         } else {
           echo "view is empty!!!";
         }
-
-//        foreach($data as $key => $value) {
-//          if (!array_key_exists($key, $data) && $key !== 0){
-//            echo "Не хватает \"$key\" в массиве данных для полного счастья";
-//          } else {
-//            echo "\"$key\" есть! ";
-//          }
-//        }
-
       } else {
         echo 'Дата пуста((( ';
       }

@@ -12,7 +12,13 @@ class UserController extends Controller
   {
     parent::__construct();
     $this->view = 'user/login.html';
+  }
 
+  public function index($data = [])
+  {
+    if (isset($_SESSION['logged_user'])){
+      return $this->account();
+    } else return $this->login($data);
   }
 
   /**
@@ -27,6 +33,7 @@ class UserController extends Controller
       $user = new User();
 
       if ($result = $user->auth($data)) {
+        // Если авторизовались, то переходим в личный кабинет:
         if ($result['success']) {
           return [
             'sitename' => $this->sitename,
@@ -35,7 +42,7 @@ class UserController extends Controller
             'view' => 'user/account.html'
           ];
 
-          // если не success, то оставляем на этой же странице
+          // если не success, то оставляем на этой же странице:
         } else {
           return [
             'sitename' => $this->sitename,
@@ -61,8 +68,8 @@ class UserController extends Controller
       if ($data['success']) {
         $result['content_data']['message'] = 'Вы успешно зарегистрировались, войдите под своим именем!';
       }
-      echo 'Result из login: ';
-      print_r($result);
+//      echo 'Result из login: ';
+//      print_r($result);
       return $result;
     }
 

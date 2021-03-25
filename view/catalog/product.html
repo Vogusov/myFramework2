@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+{{title}}
+{% endblock %}
+
+
+{% block content %}
+
+{{content_data.message}}
+
+<div class="product">
+  
+  {% if content_data.product %}
+  {% set item = content_data.product %}
+  <ul>
+    <li>Наименование: {{ item.id }} - {{ item.name }}</li>
+    <li>Цена: {{ item.price }}</li>
+    <li>Описание: {{ item.description }}</li>
+    <li>Картинка: {{ item.img }}</li>
+    <li>Категория: {{ item.category }}</li>
+    <li>Статус: {{ item.status }}</li>
+  </ul>
+  <button data-id="{{ product_item.id }}">В корзину</button>
+  
+  {% else %}
+  <p>No products have been found.</p>
+  {% endif %}
+
+</div>
+
+{% endblock %}
