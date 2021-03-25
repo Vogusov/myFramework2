@@ -70,15 +70,6 @@ class Router
         } else {
           echo "view is empty!!!";
         }
-
-//        foreach($data as $key => $value) {
-//          if (!array_key_exists($key, $data) && $key !== 0){
-//            echo "Не хватает \"$key\" в массиве данных для полного счастья";
-//          } else {
-//            echo "\"$key\" есть! ";
-//          }
-//        }
-
       } else {
         echo 'Дата пуста((( ';
       }
