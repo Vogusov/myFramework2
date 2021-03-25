@@ -7,8 +7,8 @@ namespace Composer\Autoload;
 class ComposerStaticInitb004099d17d61f5a845205f98916ce90
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -24,8 +24,8 @@ class ComposerStaticInitb004099d17d61f5a845205f98916ce90
         'F' => 
         array (
             'Fw2\\Model\\' => 10,
+            'Fw2\\Core\\' => 9,
             'Fw2\\Controller\\' => 15,
-            'Fw2\\Base\\' => 9,
         ),
     );
 
@@ -46,13 +46,13 @@ class ComposerStaticInitb004099d17d61f5a845205f98916ce90
         array (
             0 => __DIR__ . '/../..' . '/model',
         ),
+        'Fw2\\Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/core',
+        ),
         'Fw2\\Controller\\' => 
         array (
             0 => __DIR__ . '/../..' . '/controller',
-        ),
-        'Fw2\\Base\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/lib',
         ),
     );
 
