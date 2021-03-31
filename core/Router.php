@@ -59,27 +59,42 @@ class Router
       $controller = new $controllerName();
 
       $data = $controller->$methodName($_GET); // Массив с данными для представления шаблонизатору
-
-//      echo 'Полученная data из контроллера: ';
+//      echo 'data: ';
 //      print_r($data);
+//      echo '<br>';
+//
+//      echo 'get: ';
+//      print_r($_GET);
+//      echo '<br>';
+//
+//      echo 'post: ';
+//      print_r($_POST);
+//      echo '<br>';
 
-      if (!empty($data)) {
-        if (!empty($data['view'])) {
-//          echo 'Вью из контроллера: '; print_r($data['view']);
-          $view = $data['view']; // строка. Путь до шаблона.
-        } else {
-          echo "view is empty!!!";
-        }
+
+      // выполняем асинхронно, если asAjax, рендерим страницу, если нет!
+      if (!isset($_SESSION['asAjax'])) {
+
+//        if (!empty($data)) {
+//          if (!empty($data['view'])) {
+            $view = $data['view']; // строка. Путь до шаблона.
+//          } else {
+//            echo "view is empty!!!";
+//          }
+//        } else {
+//          echo 'Дата пуста((( ';
+//        }
+
+        $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
+        $twig = new \Twig\Environment($loader);
+        $twig->addGlobal('session', $_SESSION);
+        echo $template = $twig->render($view, $data);
+
+
       } else {
-        echo 'Дата пуста((( ';
+        echo $data;
+        unset($_SESSION['asAjax']);
       }
-
-      $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
-      $twig = new \Twig\Environment($loader);
-      $twig->addGlobal('session', $_SESSION);
-      echo $template = $twig->render($view, $data);
-
-
       /**
        *  Ключи данного массива доступны в любой вьюшке
        * Массив data ВОЗВРАЩАЕТСЯ ИЗ КОНТРОЛЛЕРА!!!

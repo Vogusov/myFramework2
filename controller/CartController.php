@@ -13,37 +13,34 @@ class CartController extends Controller
 
   /**
    * @param array $data
-   * @return array ['sitename', 'content_data', 'title', 'view']
    * */
   function index($data)
   {
-    if (isset($_POST['action'])){
-      // делаем action
-      self::add($_POST['id']);
-//      echo '!Data from PHP!';
-    } else {
-      // возвращаем индексную страницу
-      return [
-        'sitename' => $this->sitename,
-        'content_data' => "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>",
-        'title' => $this->title,
-        'view' => $this->view
-      ];
 
-    }
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>",
+      'title' => $this->title,
+      'view' => $this->view
+    ];
+
   }
 
-  protected static function add($id) {
 
-    if (!empty($id)){
-      echo "ID of Prod: $id;";
+  function add($data)
+  {
+    if (isset($data)) {
+      session_start();
+      $_SESSION['id_in_cart'][] = $data['id'];
+      $_SESSION['asAjax'] = true;
 
+      echo "сессия в корзине: ";
+      print_r($_SESSION['id_in_cart']);
+      return count($_SESSION['id_in_cart']);
+//      echo '!Data from PHP!';
     } else {
       echo "Data [ID] is empty!!!";
     }
-
-//    return "есть контакт!";
   }
 }
-
 //site/index.php?path=index/test/5

@@ -10,7 +10,8 @@
     }
   ],
   "require": {
-    "twig/twig": "^v3.3.0"
+    "twig/twig": "^v3.3.0",
+    "ext-json": "*"
   },
 
   "autoload": {

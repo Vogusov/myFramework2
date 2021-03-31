@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'd56054de8155a467a63cc535fe642872621ff5fb',
+    'reference' => '591fda3ed0d6472b5ed41cc451e731d175ab6d9f',
     'name' => 'vendor_name/framework2',
   ),
   'versions' => 
@@ -45,7 +45,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'd56054de8155a467a63cc535fe642872621ff5fb',
+      'reference' => '591fda3ed0d6472b5ed41cc451e731d175ab6d9f',
     ),
   ),
 );
