@@ -21,9 +21,9 @@ $(document).ready(function(){
               },
             // dataType: 'json',
             error: function() {alert("Что-то пошло не так...");},
-            success: function (data) {
-                if (data) {
-                    console.log('dataJs: ' + data)
+            success: function (response) {
+                if (response) {
+                    console.log('responseDataJs: ' + response)
                     alert('Товар ' + productName + ' добавлен в корзину')
 
                     // Тут посчитать сумму товаров.

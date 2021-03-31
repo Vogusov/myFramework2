@@ -75,15 +75,15 @@ class Router
       // выполняем асинхронно, если asAjax, рендерим страницу, если нет!
       if (!isset($_SESSION['asAjax'])) {
 
-//        if (!empty($data)) {
-//          if (!empty($data['view'])) {
+        if (!empty($data)) {
+          if (!empty($data['view'])) {
             $view = $data['view']; // строка. Путь до шаблона.
-//          } else {
-//            echo "view is empty!!!";
-//          }
-//        } else {
-//          echo 'Дата пуста((( ';
-//        }
+          } else {
+            echo "view is empty!!!";
+          }
+        } else {
+          echo 'Дата пуста((( ';
+        }
 
         $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
         $twig = new \Twig\Environment($loader);
@@ -92,23 +92,13 @@ class Router
 
 
       } else {
+
+        // Возвращение данных в JS
+        // add - возвращает колличество вещей в корзине
         echo $data;
         unset($_SESSION['asAjax']);
       }
-      /**
-       *  Ключи данного массива доступны в любой вьюшке
-       * Массив data ВОЗВРАЩАЕТСЯ ИЗ КОНТРОЛЛЕРА!!!
-       */
-      /*
-     $data = [
-       'sitename' => $controller->sitename,
-       'content_data' => $controller->$methodName($_GET), // вызов метода контроллера с параметром (если есть)
-       'title' => $controller->title,
-       'VIEW' = $controller->view . '/' . $methodName . '.html';
-     ];
-     print_r($data);
 
-     */
 
 
     }

@@ -26,18 +26,17 @@ class CartController extends Controller
 
   }
 
-
+/**
+ * todo: реализовать добавление в корзину!!!
+ *
+ * */
   function add($data)
   {
     if (isset($data)) {
       session_start();
       $_SESSION['id_in_cart'][] = $data['id'];
       $_SESSION['asAjax'] = true;
-
-      echo "сессия в корзине: ";
-      print_r($_SESSION['id_in_cart']);
       return count($_SESSION['id_in_cart']);
-//      echo '!Data from PHP!';
     } else {
       echo "Data [ID] is empty!!!";
     }
