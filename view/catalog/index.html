@@ -25,7 +25,7 @@
     <li>{{ product_item.category }}</li>
     <li>{{ product_item.status }}</li>
   </ul>
-  <button data-id="{{ product_item.id }}">В корзину</button>
+  <button class="js-add-to-cart" data-id="{{ product_item.id }}">В корзину</button>
   
   {% else %}
   <p>No products have been found.</p>
