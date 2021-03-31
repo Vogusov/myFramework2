@@ -13,13 +13,17 @@ class CartController extends Controller
 
   /**
    * @param array $data
-   * @return array ['sitename', 'content_data', 'title', 'view']
    * */
   function index($data)
   {
     if (isset($_POST['action'])){
       // делаем action
-      self::add($_POST['id']);
+      session_start();
+      $_SESSION['id_in_cart'][] = self::add($_POST['id']);
+      $_SESSION['asAjax'] = true;
+      echo "сессия в корзине: ";
+      print_r($_SESSION['id_in_cart']);
+      return count($_SESSION['id_in_cart']);
 //      echo '!Data from PHP!';
     } else {
       // возвращаем индексную страницу
@@ -36,7 +40,8 @@ class CartController extends Controller
   protected static function add($id) {
 
     if (!empty($id)){
-      echo "ID of Prod: $id;";
+
+      return "$id!";
 
     } else {
       echo "Data [ID] is empty!!!";

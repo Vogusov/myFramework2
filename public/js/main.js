@@ -5,7 +5,8 @@ $(document).ready(function(){
 // запрос на добавление в корзину
     btn = $('.js-add-to-cart')
 
-    btn.click(function () {
+    btn.click(function (e) {
+        e.preventDefault();
         productId = $(this).data('id')
         productName = $(this).data('name')
         console.log('prod: ', `${productId} - ${productName};`)
@@ -18,10 +19,11 @@ $(document).ready(function(){
                   action: 'add',
                   id: productId
               },
+            // dataType: 'json',
             error: function() {alert("Что-то пошло не так...");},
             success: function (data) {
                 if (data) {
-                    console.log('data: ' + data)
+                    console.log('dataJs: ' + data)
                     alert('Товар ' + productName + ' добавлен в корзину')
 
                     // Тут посчитать сумму товаров.
