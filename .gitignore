@@ -3,3 +3,4 @@
 logs
 public/templates_c
 vendor
+node_modules

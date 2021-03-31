@@ -8,7 +8,9 @@
 
 {% block content %}
 
+{% if content_data.products is not defined %}
 {{content_data.message}}
+{% else %}
 
 <div class="goods">
   
@@ -25,12 +27,14 @@
     <li>{{ product_item.category }}</li>
     <li>{{ product_item.status }}</li>
   </ul>
-  <button class="js-add-to-cart" data-id="{{ product_item.id }}">В корзину</button>
+<!--  <button class="js-add-to-cart" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">В корзину</button>-->
+  <input type="button" value="Buy" class="js-add-to-cart" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">
   
-  {% else %}
-  <p>No products have been found.</p>
+<!--  <p>No products have been found.</p>-->
   {% endfor %}
-
+  
 </div>
+
+{% endif %}
 
 {% endblock %}
