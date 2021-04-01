@@ -31,7 +31,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `cart_goods_id_fk` (`product_id`),
   CONSTRAINT `cart_goods_id_fk` FOREIGN KEY (`product_id`) REFERENCES `goods` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (1,1,3,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:44:18'),(2,8,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:44:43'),(3,7,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:46:37'),(4,6,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:47:16'),(5,5,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:47:26'),(6,1,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:51:32'),(7,7,2,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 13:53:06');
+INSERT INTO `cart` VALUES (15,1,4,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:56:42'),(16,2,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:56:13'),(17,3,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:56:50'),(18,4,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:56:53'),(19,7,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:57:05'),(20,6,1,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-01 20:57:10');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-01 17:21:58
+-- Dump completed on 2021-04-01 23:58:52

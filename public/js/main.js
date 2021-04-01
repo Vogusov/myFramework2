@@ -18,8 +18,9 @@ $(document).ready(function(){
               {
                   id: productId
               },
-            // dataType: 'json',
-            error: function() {alert("Что-то пошло не так...");},
+            error: function() {
+                alert("Что-то пошло не так...")
+            },
             success: function (response) {
                 if (response) {
                     console.log('responseDataJs: ' + response)

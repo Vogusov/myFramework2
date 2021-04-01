@@ -18,7 +18,7 @@ class Cart
   // Увеличиваем количество товара на 1
   public function increase(int $id)
   {
-    return Db::getInstance()->update('update `cart` set `quantity` = `quantity` + 1 where `id` = :id', ['id' => $id]);
+    return Db::getInstance()->update('update `cart` set `quantity` = `quantity` + 1, `date_changed` = now() where `product_id` = :id', ['id' => $id]);
   }
 
   // Уменьшаемколичкство товара на 1
@@ -31,8 +31,7 @@ class Cart
   public function isProductInCart(int $id)
   {
     return Db::getInstance()->getRow(
-      'select * from `goods` where `id` = :id',
-      ['id' => $id]
-    );
-  }
+      'select * from `cart` where `product_id` = :id and `session_id` = :session_id',
+      ['id' => $id, 'session_id' => session_id()]);
+    }
 }
