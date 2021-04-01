@@ -16,7 +16,6 @@ $(document).ready(function(){
             url: '/index.php?path=cart/add/' + productId,
             data:
               {
-                  action: 'add',
                   id: productId
               },
             // dataType: 'json',
@@ -26,7 +25,7 @@ $(document).ready(function(){
                     console.log('responseDataJs: ' + response)
                     alert('Товар ' + productName + ' добавлен в корзину')
 
-                    // Тут посчитать сумму товаров.
+                    // todo Тут посчитать сумму товаров.
                     // countTotalSumInCart()
                 }
             }

@@ -66,7 +66,7 @@ class Db
    */
   private function query(string $query, array $args)
   {
-    echo "<pre>" . $query . "</pre>";
+//    echo "<pre>" . $query . "</pre>";
     $sth = $this->db->prepare($query);
     $sth->execute($args);
     if ($sth) {

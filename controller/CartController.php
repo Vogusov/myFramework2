@@ -1,14 +1,24 @@
 <?php
 namespace Fw2\Controller;
 
+use Fw2\Model\Cart;
+
 class CartController extends Controller
 {
 
+  /**
+   * @var Cart
+   */
+  private Cart $cart;
+
   function __construct()
   {
+    $this->cart = new Cart();
+
     parent::__construct();
     $this->title = 'Корзина';
     $this->view = 'cart/index.html';
+
   }
 
   /**
@@ -28,13 +38,24 @@ class CartController extends Controller
 
 /**
  * todo: реализовать добавление в корзину!!!
+ * @param array $data['id']
  *
  * */
   function add($data)
   {
     if (isset($data)) {
-      session_start();
-      $_SESSION['id_in_cart'][] = $data['id'];
+      $productId = $data['id'];
+
+      //1. Проверяем, есть ли товар в корзине
+      if ($this->cart->isProductInCart($productId)) {
+      //2. Есть - увеличиваем
+        $this->cart->increase($productId);
+      } else {
+        //3. Нет - Дописываем строку в корзину
+        $this->cart->add($productId);
+      }
+
+      $_SESSION['id_in_cart'][] = $productId;
       $_SESSION['asAjax'] = true;
       return count($_SESSION['id_in_cart']);
     } else {
