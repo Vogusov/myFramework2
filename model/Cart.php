@@ -33,5 +33,12 @@ class Cart
     return Db::getInstance()->getRow(
       'select * from `cart` where `product_id` = :id and `session_id` = :session_id',
       ['id' => $id, 'session_id' => session_id()]);
+  }
+
+  // Все товары в корзине по заданному ID
+  public function getAll($sessionId)
+  {
+    return Db::getInstance()->select('select * from `cart` where `session_id` = :session_id',
+      ['session_id' => $sessionId]);
     }
 }

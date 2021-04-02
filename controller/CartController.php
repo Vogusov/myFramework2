@@ -21,6 +21,10 @@ class CartController extends Controller
 
   }
 
+  private function getProducts($sessionId) {
+    return $this->cart->getAll($sessionId);
+  }
+
   /**
    * @param array $data
    *
@@ -28,10 +32,14 @@ class CartController extends Controller
    */
   function index($data)
   {
+    $products=$this->getProducts(session_id());
 
     return [
       'sitename' => $this->sitename,
-      'content_data' => "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>",
+      'content_data' => [
+        'empty_message' => "Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\"/index.php?path=catalog/\">магазине</a>",
+        'products' => $products
+      ],
       'title' => $this->title,
       'view' => $this->view
     ];
