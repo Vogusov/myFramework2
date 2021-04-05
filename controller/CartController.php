@@ -1,4 +1,5 @@
 <?php
+
 namespace Fw2\Controller;
 
 use Fw2\Model\Cart;
@@ -21,10 +22,6 @@ class CartController extends Controller
 
   }
 
-  private function getProducts($sessionId) {
-    return $this->cart->getAll($sessionId);
-  }
-
   /**
    * @param array $data
    *
@@ -32,7 +29,7 @@ class CartController extends Controller
    */
   function index($data)
   {
-    $products=$this->getProducts(session_id());
+    $products = $this->getProducts(session_id());
 
     return [
       'sitename' => $this->sitename,
@@ -43,36 +40,97 @@ class CartController extends Controller
       'title' => $this->title,
       'view' => $this->view
     ];
-
   }
 
   /**
-   * @param array $data ['id']
+   * @param array $data
    *
-   * @return int
+   * @return array
    */
-  function add(array $data)
-  {
-    if (isset($data)) {
-      $productId = $data['id'];
-
-      //1. Проверяем, есть ли товар в корзине
-      if (!$this->cart->isProductInCart($productId)) {
-
-        //2. Нет - Дописываем строку в корзину
-        $this->cart->add($productId);
-
-      } else {
-      //2. Есть - увеличиваем
-      $this->cart->increase($productId);
-      }
-
-      $_SESSION['id_in_cart'][] = $productId;
-      $_SESSION['asAjax'] = true;
-      return count($_SESSION['id_in_cart']);
-    } else {
-      echo "Data [ID] is empty!!!";
-    }
+  function delete($data) {
+    $productId = $data['id'];
+    return $this->cart->remove($productId);
   }
+
+  /**
+   * @param array $data
+   *
+   * @return array
+   */
+  function changeQnt($data)
+  {
+    $_SESSION['asAjax'] = true;
+    $productId = $data['id'];
+    $quantity = $_POST['quantity'];
+
+    if (isset($_POST['sign'])) {
+      // выбираем знак
+      if ($_POST['sign'] == '+') {
+        $this->add($data);
+        return ++$quantity;
+
+      } elseif ($_POST['sign'] == '-') {
+
+        // если товар один в корзине, то удаляем его
+        if ($quantity == 1) {
+          if($rem = $this->cart->remove($productId)) {
+            echo 0;
+          } else {
+            echo 'Не удалился';
+          }
+          // если товар не один, то уменьшаем на 1
+        } elseif ($quantity > 1) {
+          if ($this->cart->decrease($productId)) {
+            return --$quantity;
+          } else {
+            return $quantity;
+          }
+        }
+      } else {
+        echo 'Неопознанный знак';
+      }
+    } else {
+      echo 'Нет знака!';
+    }
+}
+
+function getProducts($sessionId)
+{
+  return $this->cart->getAll($sessionId);
+}
+
+
+/**
+ * @param array $data ['id']
+ *
+ * @return int
+ */
+function add(array $data)
+{
+  if (isset($data)) {
+    $productId = $data['id'];
+
+    //1. Проверяем, есть ли товар в корзине
+    if (!$this->cart->isProductInCart($productId)) {
+
+      //2. Нет - Дописываем строку в корзину
+      $lastId = $this->cart->add($productId);
+      $_SESSION['asAjax'] = true;
+      return $lastId;
+
+
+    } else {
+      //2. Есть - увеличиваем
+      $resultRow = $this->cart->increase($productId);
+      $_SESSION['asAjax'] = true;
+      return $resultRow;
+    }
+
+//      $_SESSION['id_in_cart'][] = $productId;
+//      $_SESSION['asAjax'] = true;
+  } else {
+    echo "Data [ID] is empty!!!";
+  }
+}
 }
 //site/index.php?path=index/test/5

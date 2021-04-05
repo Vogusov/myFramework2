@@ -118,7 +118,7 @@ class Db
    * @param array $args
    * @return integer affected rows
    */
-  public function update(string $query, array $args)
+  public function update(string $query, array $args):int
   {
     return $this->query($query, $args)->rowCount();
   }
@@ -129,7 +129,7 @@ class Db
    * @param array $args
    * @return integer affected rows
    */
-  public function delete(string $query, array $args)
+  public function delete(string $query, array $args):int
   {
     return $this->query($query, $args)->rowCount();
   }

@@ -59,20 +59,9 @@ class Router
       $controller = new $controllerName();
 
       $data = $controller->$methodName($_GET); // Массив с данными для представления шаблонизатору
-//      echo 'data: ';
-//      print_r($data);
-//      echo '<br>';
-//
-//      echo 'get: ';
-//      print_r($_GET);
-//      echo '<br>';
-//
-//      echo 'post: ';
-//      print_r($_POST);
-//      echo '<br>';
 
 
-      // выполняем асинхронно, если asAjax, рендерим страницу, если нет!
+      // выполняем асинхронно, если asAjax. Рендерим страницу, если нет!
       if (!isset($_SESSION['asAjax'])) {
 
         if (!empty($data)) {
@@ -93,7 +82,7 @@ class Router
 
       } else {
 
-        // Возвращение данных в JS
+        // Если asAjax - Возвращение данных в JS
         // add - возвращает колличество вещей в корзине
         echo $data;
         unset($_SESSION['asAjax']);
