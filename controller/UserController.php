@@ -16,19 +16,45 @@ class UserController extends Controller
     $this->view = 'user/login.html';
   }
 
+  /**
+   * Вход в свой аккаунт
+   * @param array $data
+   *
+   * */
   public function index($data = [])
   {
-    if (isset($_SESSION['logged_user'])) {
+    if (!isset($_SESSION['logged_user']))
+      return $this->login($data);
+
+    if (!isset($_POST['action']['logout']))
       return $this->account();
-    } else return $this->login($data);
+
+    // если есть пост логаут, то логаут
+    $_SESSION['asAjax'] = true;
+    return $this->logout();
+
   }
+
+
+  /**
+   * Вход в свой аккаунт
+   * @param int $user_id
+   * @return array ['sitename', 'content_data', 'title', 'view']
+   * */
+  public
+  function orders($user_id)
+  {
+
+  }
+
 
   /**
    * Вход в свой аккаунт
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
-  public function login(array $data)
+  public
+  function login(array $data)
   {
     if (isset($_POST['auth'])) {
       $data = $_POST;
@@ -37,28 +63,7 @@ class UserController extends Controller
       if ($result = $this->user->auth($data)) {
         // Если авторизовались, то переходим в личный кабинет:
         if ($result['success']) {
-          if (isset($_SESSION['logged_user'])) {
-            $id = $_SESSION['logged_user'];
-            $userData = $this->user->getData($id);
-            print_r($userData);
-            $userName = $userData['name'];
-            $userEmail = $userData['email'];
-            $userPhone = $userData['phone'];
-            $userLogin = $userData['login'];
-            return [
-              'sitename' => $this->sitename,
-              'content_data' => [
-                'user' => [
-                  'name' => $userName,
-                  'email' => $userEmail,
-                  'phone' => $userPhone,
-                  'login' => $userLogin,
-                ]
-              ],
-              'title' => 'Личный кабинет',
-              'view' => 'user/account.html'
-            ];
-          }
+          return $this->account();
 
           // если не success, то оставляем на этой же странице:
         } else {
@@ -94,18 +99,9 @@ class UserController extends Controller
   }
 
 
-  public function logout()
+  private function logout()
   {
-//    $user = new User();
-    if ($this->user->logout()) {
-      return [
-        'sitename' => $this->sitename,
-        'view' => 'index/index.html',
-        'content_data' => [
-          'message' => "Вы вышли из аккаунта! ",
-        ],
-      ];
-    }
+    return $this->user->unsetLoggedSession();
   }
 
 
@@ -156,14 +152,6 @@ class UserController extends Controller
           echo 'Есть результат! ';
           print_r($result);
           return $this->login($result);
-//            [
-//            'sitename' => $this->sitename,
-//            'content_data' => [
-//              'message' => "Вы успешно зарегистрировались c ID: {$result['id']}! Теперь войдите в свой аккакнт: ",
-//            ],
-//            'title' => 'Вход',
-//            'view' => 'user/login.html'
-//          ];
 
         } else {
           return [

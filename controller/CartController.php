@@ -29,7 +29,7 @@ class CartController extends Controller
    */
   function index($data)
   {
-    $products = $this->getProducts(session_id());
+    $products = $this->getProducts();
 
     return [
       'sitename' => $this->sitename,
@@ -47,7 +47,8 @@ class CartController extends Controller
    *
    * @return array
    */
-  function delete($data) {
+  function delete($data)
+  {
     $productId = $data['id'];
     return $this->cart->remove($productId);
   }
@@ -73,7 +74,7 @@ class CartController extends Controller
 
         // если товар один в корзине, то удаляем его
         if ($quantity == 1) {
-          if($rem = $this->cart->remove($productId)) {
+          if ($rem = $this->cart->remove($productId)) {
             echo 0;
           } else {
             echo 'Не удалился';
@@ -92,45 +93,54 @@ class CartController extends Controller
     } else {
       echo 'Нет знака!';
     }
-}
+  }
 
-function getProducts($sessionId)
-{
-  return $this->cart->getAll($sessionId);
-}
-
-
-/**
- * @param array $data ['id']
- *
- * @return int
- */
-function add(array $data)
-{
-  if (isset($data)) {
-    $productId = $data['id'];
-
-    //1. Проверяем, есть ли товар в корзине
-    if (!$this->cart->isProductInCart($productId)) {
-
-      //2. Нет - Дописываем строку в корзину
-      $lastId = $this->cart->add($productId);
-      $_SESSION['asAjax'] = true;
-      return $lastId;
-
-
+  function getProducts()
+  {
+    if (isset($_SESSION['logged_user'])) {
+      return $this->cart->getAll();
     } else {
-      //2. Есть - увеличиваем
-      $resultRow = $this->cart->increase($productId);
-      $_SESSION['asAjax'] = true;
-      return $resultRow;
+      echo 'Нужно залогиниться';
     }
+  }
+
+
+  /**
+   * @param array $data ['id']
+   *
+   * @return int
+   */
+  function add(array $data)
+  {
+    if (isset($_SESSION['logged_user'])) {
+      if (isset($data)) {
+        $productId = $data['id'];
+
+        //1. Проверяем, есть ли товар в корзине
+        if (!$this->cart->isProductInCart($productId)) {
+
+          //2. Нет - Дописываем строку в корзину
+          $lastId = $this->cart->add($productId);
+          echo 'Мы тут!';
+          $_SESSION['asAjax'] = true;
+          return $lastId;
+
+        } else {
+          //2. Есть - увеличиваем
+          $resultRow = $this->cart->increase($productId);
+          $_SESSION['asAjax'] = true;
+          return $resultRow;
+        }
 
 //      $_SESSION['id_in_cart'][] = $productId;
 //      $_SESSION['asAjax'] = true;
-  } else {
-    echo "Data [ID] is empty!!!";
+      } else {
+        echo "Data [ID] is empty!!!";
+      }
+    } else {
+      echo 'Нужно авторизоваттьяся!';
   }
-}
+
+  }
 }
 //site/index.php?path=index/test/5

@@ -109,6 +109,28 @@ $(document).ready(function () {
   })
 
 
+  // Logout
+  btnUserLogout = $('.js-user-logout')
+  btnUserLogout.click(function (e) {
+
+    $.ajax({
+      type: 'POST',
+      url: '/index.php?path=user/',
+      data:
+        {
+          action: 'logout'
+        },
+      success: function (responseData) {
+        if (responseData) {
+          console.log('logout: ' + responseData)
+          window.location = 'index.php'
+          alert('Вы вышли из аккаунта!')
+          }
+        },
+      })
+  })
+
+
 //---the end;
 })
 
