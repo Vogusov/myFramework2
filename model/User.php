@@ -159,7 +159,7 @@ class User
     }
   }
 
-  public function logout()
+  public function unsetLoggedSession()
   {
     unset($_SESSION['logged_user']);
     return true;

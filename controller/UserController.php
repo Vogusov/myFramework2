@@ -19,7 +19,15 @@ class UserController extends Controller
   public function index($data = [])
   {
     if (isset($_SESSION['logged_user'])) {
-      return $this->account();
+      // если есть пост логаут, то логаут
+      if (isset($_POST['action'])) {
+        $_SESSION['asAjax'] = true;
+        return $this->logout();
+
+        // если нет ничего, то в аккаунт
+      } else {
+        return $this->account();
+      }
     } else return $this->login($data);
   }
 
@@ -37,28 +45,7 @@ class UserController extends Controller
       if ($result = $this->user->auth($data)) {
         // Если авторизовались, то переходим в личный кабинет:
         if ($result['success']) {
-          if (isset($_SESSION['logged_user'])) {
-            $id = $_SESSION['logged_user'];
-            $userData = $this->user->getData($id);
-            print_r($userData);
-            $userName = $userData['name'];
-            $userEmail = $userData['email'];
-            $userPhone = $userData['phone'];
-            $userLogin = $userData['login'];
-            return [
-              'sitename' => $this->sitename,
-              'content_data' => [
-                'user' => [
-                  'name' => $userName,
-                  'email' => $userEmail,
-                  'phone' => $userPhone,
-                  'login' => $userLogin,
-                ]
-              ],
-              'title' => 'Личный кабинет',
-              'view' => 'user/account.html'
-            ];
-          }
+          return $this->account();
 
           // если не success, то оставляем на этой же странице:
         } else {
@@ -94,18 +81,9 @@ class UserController extends Controller
   }
 
 
-  public function logout()
+  private function logout()
   {
-//    $user = new User();
-    if ($this->user->logout()) {
-      return [
-        'sitename' => $this->sitename,
-        'view' => 'index/index.html',
-        'content_data' => [
-          'message' => "Вы вышли из аккаунта! ",
-        ],
-      ];
-    }
+    return $this->user->unsetLoggedSession();
   }
 
 
