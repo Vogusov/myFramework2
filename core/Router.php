@@ -74,6 +74,8 @@ class Router
           echo 'Дата пуста((( ';
         }
 
+        print_r($_SESSION);
+
         $loader = new \Twig\Loader\FilesystemLoader(Config::get('path_templates'));
         $twig = new \Twig\Environment($loader);
         $twig->addGlobal('session', $_SESSION);

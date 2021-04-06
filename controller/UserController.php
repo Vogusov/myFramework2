@@ -6,17 +6,19 @@ use Fw2\Model\User as User;
 
 class UserController extends Controller
 {
-//  public
+
+  private User $user;
 
   function __construct()
   {
+    $this->user = new User;
     parent::__construct();
     $this->view = 'user/login.html';
   }
 
   public function index($data = [])
   {
-    if (isset($_SESSION['logged_user'])){
+    if (isset($_SESSION['logged_user'])) {
       return $this->account();
     } else return $this->login($data);
   }
@@ -30,17 +32,33 @@ class UserController extends Controller
   {
     if (isset($_POST['auth'])) {
       $data = $_POST;
-      $user = new User();
+//      $user = new User();
 
-      if ($result = $user->auth($data)) {
+      if ($result = $this->user->auth($data)) {
         // Если авторизовались, то переходим в личный кабинет:
         if ($result['success']) {
-          return [
-            'sitename' => $this->sitename,
-            'content_data' => [],
-            'title' => 'Личный кабинет',
-            'view' => 'user/account.html'
-          ];
+          if (isset($_SESSION['logged_user'])) {
+            $id = $_SESSION['logged_user'];
+            $userData = $this->user->getData($id);
+            print_r($userData);
+            $userName = $userData['name'];
+            $userEmail = $userData['email'];
+            $userPhone = $userData['phone'];
+            $userLogin = $userData['login'];
+            return [
+              'sitename' => $this->sitename,
+              'content_data' => [
+                'user' => [
+                  'name' => $userName,
+                  'email' => $userEmail,
+                  'phone' => $userPhone,
+                  'login' => $userLogin,
+                ]
+              ],
+              'title' => 'Личный кабинет',
+              'view' => 'user/account.html'
+            ];
+          }
 
           // если не success, то оставляем на этой же странице:
         } else {
@@ -78,8 +96,8 @@ class UserController extends Controller
 
   public function logout()
   {
-    $user = new User();
-    if ($user->logout()) {
+//    $user = new User();
+    if ($this->user->logout()) {
       return [
         'sitename' => $this->sitename,
         'view' => 'index/index.html',
@@ -93,12 +111,31 @@ class UserController extends Controller
 
   public function account()
   {
-    return [
-      'sitename' => $this->sitename,
-      'view' => 'user/account.html',
-      'title' => 'Личный кабинет',
-      'content_data' => [],
-    ];
+    if (isset($_SESSION['logged_user'])) {
+      $id = $_SESSION['logged_user'];
+      $userData = $this->user->getData($id);
+      print_r($userData);
+      $userName = $userData['name'];
+      $userEmail = $userData['email'];
+      $userPhone = $userData['phone'];
+      $userLogin = $userData['login'];
+      return [
+        'sitename' => $this->sitename,
+        'view' => 'user/account.html',
+        'title' => 'Личный кабинет',
+        'content_data' => [
+          'user' => [
+            'name' => $userName,
+            'email' => $userEmail,
+            'phone' => $userPhone,
+            'login' => $userLogin,
+          ]
+        ],
+      ];
+    } else {
+      return $this->index();
+    }
+
   }
 
 

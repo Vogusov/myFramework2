@@ -138,7 +138,7 @@ class User
       echo "Есть юзер с таким логином {$user['login']}. Его ID: {$user['id']}! ";
 
       if (password_verify($data['password'], $user['password'])) {
-        $_SESSION['logged_user'] = $user;
+        $_SESSION['logged_user'] = $user['id'];
         echo 'Пароли совпали! ';
         print_r($_SESSION['logged_user']);
 
@@ -163,6 +163,11 @@ class User
   {
     unset($_SESSION['logged_user']);
     return true;
+  }
+
+  public function getData(int $userId)
+  {
+    return Db::getInstance()->getRow('select * from `users` where `id` = :id', ['id' => $userId]);
   }
 
 

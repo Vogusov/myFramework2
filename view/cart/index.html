@@ -55,9 +55,23 @@
   
   </table>
   
-  <a href="form-order.php" class="primary-button primary-button_size_l">
-    <span>Оформить заказ</span>
-  </a>
+  {% if session.logged_user %}
+  <p>
+    <a href="#" class="primary-button primary-button_size_l">
+      <span>Оформить заказ</span>
+    </a>
+  </p>
+  
+  {% else %}
+  <p>
+    <a href="/index.php?path=user/login" class="primary-button primary-button_size_l">
+      <span>Войдите или Зарегистрируйтесь</span>
+    </a>
+    для оформления заказа!
+  </p>
+  
+  {% endif %}
+  
   
   {% else %}
   

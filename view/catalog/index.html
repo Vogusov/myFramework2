@@ -27,8 +27,12 @@
     <li>{{ product_item.category }}</li>
     <li>{{ product_item.status }}</li>
   </ul>
+  
+  {% if session.logged_user %}
   <button class="js-add-to-cart" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">В корзину</button>
-<!--  <a href="#" class="js-add-to-cart" name="asAjax" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">В корзину</a>-->
+  {% else %}
+    <a href="/index.php?path=user/login/" class="" name="" >Авторизуйтесь</a>
+  {% endif %}
 <!--  <input type="button" value="Buy" class="js-add-to-cart" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">-->
   
 <!--  <p>No products have been found.</p>-->

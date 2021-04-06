@@ -7,10 +7,10 @@
 
 {% block content %}
 
-<h3>Добро пожаловать {{session.logged_user.name}}!</h3>
-<p>login: {{session.logged_user.login}}</p>
-<p>email: {{session.logged_user.email}}</p>
-<p>phone: {{session.logged_user.phone}}</p>
+<h3>Добро пожаловать {{content_data.user.name}}!</h3>
+<p>login: {{content_data.user.login}}</p>
+<p>email: {{content_data.user.email}}</p>
+<p>phone: {{content_data.user.phone}}</p>
 
 <a href="/index.php?path=user/logout" >Выйти</a>
 

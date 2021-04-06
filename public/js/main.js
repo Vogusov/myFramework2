@@ -98,7 +98,7 @@ $(document).ready(function () {
           alert('Товар ' + productName + ' удален из корзины')
           $('.js-cart-table tr[data-id =' + productId + ']').remove()
 
-          emptyCartMassege = 'Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href=\\"/index.php?path=catalog/\\">магазине</a>'
+          emptyCartMassege = 'Это ваша корзина! Она пока пуста. Дождитесь, пока появятся товары в нашем <a href="/index.php?path=catalog/">магазине</a>'
           //
           if ($('#cart-table tbody').children('tr').length == 0) {
             $('#cart-wrapper').html(emptyCartMassege)
