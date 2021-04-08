@@ -23,6 +23,7 @@ class UserController extends Controller
     } else return $this->login($data);
   }
 
+
   /**
    * Вход в свой аккаунт
    * @param array $data
@@ -156,14 +157,6 @@ class UserController extends Controller
           echo 'Есть результат! ';
           print_r($result);
           return $this->login($result);
-//            [
-//            'sitename' => $this->sitename,
-//            'content_data' => [
-//              'message' => "Вы успешно зарегистрировались c ID: {$result['id']}! Теперь войдите в свой аккакнт: ",
-//            ],
-//            'title' => 'Вход',
-//            'view' => 'user/login.html'
-//          ];
 
         } else {
           return [

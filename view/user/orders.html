@@ -7,8 +7,38 @@
 
 {% block content %}
 
+{{ content_data.text }}
 
 
+<table id="cart-table" class="cart-table js-cart-table">
+  
+  <thead>
+  <tr>
+    <th><p>Изображение</p></th>
+    <th><p>Наименование</p></th>
+    <th><p>Цена</p></th>
+    <th><p>Колличество</p></th>
+    <th><p>Стоимость</p></th>
+    <th></th>
+  </tr>
+  </thead>
+  
+  <tbody>
+  
+  {% for product in content_data.products %}
+  
+  <tr data-id="{{ product.id }}">
+    <td><img src="{{ product.img }}" class="cart-table__img" alt="">{{ product.img }}</td>
+    <td><p>{{ product.product_id }} - {{ product.name }}</p></td>
+    <td><p><span class="js-cart-price">{{ product.price }}</span> Р</p></td>
+    <td><p><span>{{ product.quantity }}</span></p>
+    </td>
+    <td><p><span class="js-cart-total">{{ product.quantity * product.price }}</span> Р</p></td>
+    <td><p class="cart__delete js-cart-delete" data-name="{{ product.name }}" title="delete from cart">X</p></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
 
 {% endblock %}
 
