@@ -38,6 +38,7 @@ $(document).ready(function () {
   btnChangeQnt = $('.js-change-quantity')
 
   btnChangeQnt.click(function (e) {
+    e.preventDefault();
     sign = $(this).val()
     console.log('sign ', sign)
 
@@ -115,7 +116,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: 'POST',
-      url: '/index.php?path=user/',
+      url: '/index.php?path=user/logout',
       data:
         {
           action: 'logout'

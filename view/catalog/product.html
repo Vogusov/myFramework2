@@ -24,7 +24,7 @@
   </ul>
   
   {% if session.logged_user %}
-  <button class="js-add-to-cart" data-id="{{ product_item.id }}" data-name="{{ product_item.name }}">В корзину</button>
+  <button class="js-add-to-cart" data-id="{{ item.id }}" data-name="{{ item.name }}">В корзину</button>
   {% else %}
   <a href="/index.php?path=user/login/" class="" name="" >Авторизуйтесь</a>
   {% endif %}

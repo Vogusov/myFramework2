@@ -121,7 +121,7 @@ class CartController extends Controller
 
           //2. Нет - Дописываем строку в корзину
           $lastId = $this->cart->add($productId);
-          echo 'Мы тут!';
+//          echo 'Мы тут!';
           $_SESSION['asAjax'] = true;
           return $lastId;
 

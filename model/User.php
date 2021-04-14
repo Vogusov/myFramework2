@@ -161,8 +161,14 @@ class User
 
   public function unsetLoggedSession()
   {
+    echo 'Удаяляемая сессия: ';
+    print_r($_SESSION['logged_user']);
     unset($_SESSION['logged_user']);
-    return true;
+    if (!isset($_SESSION['logged_user'])) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public function getData(int $userId)
