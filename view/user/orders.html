@@ -34,11 +34,19 @@
     <td><p><span>{{ product.quantity }}</span></p>
     </td>
     <td><p><span class="js-cart-total">{{ product.quantity * product.price }}</span> Р</p></td>
-    <td><p class="cart__delete js-cart-delete" data-name="{{ product.name }}" title="delete from cart">X</p></td>
   </tr>
   {% endfor %}
   </tbody>
-  </table>
+</table>
+
+
+{% if session.confirmOrder %}
+<p>
+  <a href="/index.php?path=order/{{ session.logged_user }}" class="primary-button primary-button_size_l">
+    <span>Оформить заказ</span>
+  </a>
+</p>
+{% endif %}
 
 {% endblock %}
 

@@ -11,7 +11,8 @@
   ],
   "require": {
     "twig/twig": "^v3.3.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-mysql_xdevapi": "*"
   },
 
   "autoload": {

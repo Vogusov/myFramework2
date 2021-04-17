@@ -3,14 +3,17 @@
 namespace Fw2\Controller;
 
 use Fw2\Model\Orders as Orders;
-//use Fw2\Model\User as User;
+use Fw2\Model\Cart as Cart;
 
 class OrderController extends Controller
 {
+  private Cart $cart;
   private Orders $orders;
+
   function __construct()
   {
-    $this->orders = new Orders;
+    $this->cart = new Cart();
+    $this->orders = new Orders();
     parent::__construct();
     $this->title = 'Заказы';
     $this->view = 'user/orders.html';
@@ -26,9 +29,10 @@ class OrderController extends Controller
       return false;
 
     $userId = $data['id'];
-    $products = [];
-    // formorder
-    $this->formOrderHandler($userId);
+    $products = $this->formOrderHandler($userId);;
+    // form order
+    unset($_SESSION['confirmOrder']);
+
 
     return [
       'sitename' => $this->sitename,
@@ -38,7 +42,20 @@ class OrderController extends Controller
       ],
       'title' => $this->title,
       'view' => $this->view
+    ];
+  }
 
+  public function confirmOrder() {
+    $products = $this->cart->getAll();
+    $_SESSION['confirmOrder'] = true;
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => [
+        'text' => 'Нажмите "оформить", чтобы подтвердить заказ. Мы Вам перезвоним',
+        'products' => $products,
+      ],
+      'title' => $this->title,
+      'view' => $this->view
     ];
   }
 
@@ -46,8 +63,8 @@ class OrderController extends Controller
    * @param int $userId
    * @return array $products
    * */
-  private function formOrderHandler($userId)
+  private function formOrderHandler(int $userId)
   {
-    $this->orders->formOrder($userId);
+    return $this->orders->formOrder($userId);
   }
 }

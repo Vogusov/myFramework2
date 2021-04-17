@@ -7,6 +7,7 @@ class Db
   private static $_instance = null;
 
   private $db; // Ресурс работы с БД
+  protected $hasActiveTransaction = false;
 
 
   /*
@@ -132,6 +133,25 @@ class Db
   public function delete(string $query, array $args):int
   {
     return $this->query($query, $args)->rowCount();
+  }
+
+  public function beginTransaction() {
+    if ( $this->hasActiveTransaction ) {
+      return false;
+    } else {
+      $this->hasActiveTransaction = $this->beginTransaction ();
+      return $this->hasActiveTransaction;
+    }
+  }
+
+  public function commitTransaction() {
+    $this->hasActiveTransaction = false;
+    return $this->commit();
+  }
+
+  public function rollbackTransaction() {
+    $this->hasActiveTransaction = false;
+    return $this->rollback();
   }
 
 }
