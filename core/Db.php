@@ -135,23 +135,23 @@ class Db
     return $this->query($query, $args)->rowCount();
   }
 
-  public function beginTransaction() {
+  public function begin() {
     if ( $this->hasActiveTransaction ) {
       return false;
     } else {
-      $this->hasActiveTransaction = $this->beginTransaction ();
+      $this->hasActiveTransaction = $this->db->beginTransaction ();
       return $this->hasActiveTransaction;
     }
   }
 
   public function commitTransaction() {
     $this->hasActiveTransaction = false;
-    return $this->commit();
+    return $this->db->commit();
   }
 
   public function rollbackTransaction() {
     $this->hasActiveTransaction = false;
-    return $this->rollback();
+    return $this->db->rollback();
   }
 
 }

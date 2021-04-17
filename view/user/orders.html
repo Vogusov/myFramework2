@@ -41,11 +41,11 @@
 
 
 {% if session.confirmOrder %}
-<p>
-  <a href="/index.php?path=order/{{ session.logged_user }}" class="primary-button primary-button_size_l">
-    <span>Оформить заказ</span>
-  </a>
-</p>
+<form method="post">
+  <label for="info">Напишите дополнительную информацию и ваши пожелания, если считаете нужным: </label>
+  <textarea name="info" id="info" cols="30" rows="10" data-user="{{ session.logged_user }}"></textarea>    
+  <p><input type="submit" name="order" value="Оформить заказ"/></p>
+</form>
 {% endif %}
 
 {% endblock %}

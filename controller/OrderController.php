@@ -25,14 +25,14 @@ class OrderController extends Controller
    * */
   public function index($data)
   {
-    if (!isset($data['id']))
-      return false;
+    if (!isset($data['id'])){
+      $userId = $_SESSION['logged_user'];
+    }
 
     $userId = $data['id'];
-    $products = $this->formOrderHandler($userId);;
-    // form order
-    unset($_SESSION['confirmOrder']);
-
+    $order_id = 2; // todo сделать массив заказов
+    $products = $this->orders->getOrders($order_id);
+//    unset($_SESSION['confirmOrder']);
 
     return [
       'sitename' => $this->sitename,
@@ -45,26 +45,47 @@ class OrderController extends Controller
     ];
   }
 
-  public function confirmOrder() {
-    $products = $this->cart->getAll();
-    $_SESSION['confirmOrder'] = true;
-    return [
-      'sitename' => $this->sitename,
-      'content_data' => [
-        'text' => 'Нажмите "оформить", чтобы подтвердить заказ. Мы Вам перезвоним',
-        'products' => $products,
-      ],
-      'title' => $this->title,
-      'view' => $this->view
-    ];
-  }
+  public function confirmOrder($data) {
+    if(!isset($_POST['order'])) {
+      $products = $this->cart->getAll();
+      $_SESSION['confirmOrder'] = true;
+      return [
+        'sitename' => $this->sitename,
+        'content_data' => [
+          'text' => 'Нажмите "оформить", чтобы подтвердить заказ. Мы Вам перезвоним',
+          'products' => $products,
+        ],
+        'title' => $this->title,
+        'view' => $this->view
+      ];
+    }
+
+      if(isset($_POST['info'])){
+        $info = $_POST['info'];
+        $userId = $data['id'];
+        $products = $this->formOrderHandler($userId, $info);
+        // form order
+        unset($_SESSION['confirmOrder']);
+        return [
+          'sitename' => $this->sitename,
+          'content_data' => [
+            'text' => 'Это страница с вашими заказами.',
+            'products' => $products,
+          ],
+          'title' => $this->title,
+          'view' => $this->view
+        ];
+      }
+    }
+
 
   /**
    * @param int $userId
+   * @param string $info
    * @return array $products
-   * */
-  private function formOrderHandler(int $userId)
+   */
+  private function formOrderHandler(int $userId, string $info)
   {
-    return $this->orders->formOrder($userId);
+    return $this->orders->formOrder($userId, $info);
   }
 }

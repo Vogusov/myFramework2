@@ -1,6 +1,7 @@
 {% if session.logged_user %}
 <p>
-  <a href="/index.php?path=user/account">Личный кабинет</a> | <a href="#" class="js-user-logout">Выйти</a>
+  <a href="/index.php?path=user/account">Личный кабинет</a> | <a href="#" class="js-user-logout">Выйти</a> |
+  <a href="/index.php?path=order/{{ session.logged_user }}" >Заказы</a>
 </p>
 {% else %}
 <p>
