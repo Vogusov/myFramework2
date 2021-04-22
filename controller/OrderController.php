@@ -2,6 +2,7 @@
 
 namespace Fw2\Controller;
 
+use Fw2\Core\Db;
 use Fw2\Model\Orders as Orders;
 use Fw2\Model\Cart as Cart;
 
@@ -30,15 +31,15 @@ class OrderController extends Controller
     }
 
     $userId = $data['id'];
-    $order_id = 2; // todo сделать массив заказов
-    $products = $this->orders->getOrders($order_id);
-//    unset($_SESSION['confirmOrder']);
+
+    $orders = $this->usersOrdersHandler($userId);
+    unset($_SESSION['confirmOrder']);
 
     return [
       'sitename' => $this->sitename,
       'content_data' => [
         'text' => 'Это страница с вашими заказами.',
-        'products' => $products,
+        'orders' => $orders,
       ],
       'title' => $this->title,
       'view' => $this->view
@@ -46,8 +47,12 @@ class OrderController extends Controller
   }
 
   public function confirmOrder($data) {
+
+    print_r($_SESSION);
     if(!isset($_POST['order'])) {
       $products = $this->cart->getAll();
+      print_r($products);
+      unset($_SESSION['confirmOrder']);
       $_SESSION['confirmOrder'] = true;
       return [
         'sitename' => $this->sitename,
@@ -55,27 +60,36 @@ class OrderController extends Controller
           'text' => 'Нажмите "оформить", чтобы подтвердить заказ. Мы Вам перезвоним',
           'products' => $products,
         ],
-        'title' => $this->title,
-        'view' => $this->view
+        'title' => 'Подтверждение заказа',
+        'view' => 'user/confirmOrders.html'
       ];
-    }
-
+    } else {
       if(isset($_POST['info'])){
         $info = $_POST['info'];
-        $userId = $data['id'];
-        $products = $this->formOrderHandler($userId, $info);
-        // form order
-        unset($_SESSION['confirmOrder']);
-        return [
-          'sitename' => $this->sitename,
-          'content_data' => [
-            'text' => 'Это страница с вашими заказами.',
-            'products' => $products,
-          ],
-          'title' => $this->title,
-          'view' => $this->view
-        ];
+//        print_r($info);
+        if (isset($_SESSION['confirmOrder'])){
+          $userId = $data['id'];
+          $this->formOrderHandler($userId, $info);
+          $orders = $this->usersOrdersHandler($userId);
+          // form order
+          unset($_SESSION['confirmOrder']);
+          return [
+            'sitename' => $this->sitename,
+            'content_data' => [
+              'text' => 'Это страница с вашими заказами.',
+              'orders' => $orders,
+            ],
+            'title' => $this->title,
+            'view' => $this->view
+          ];
+        } else {
+          return $this->index($data);
+        }
+
+
       }
+    }
+
     }
 
 
@@ -87,5 +101,41 @@ class OrderController extends Controller
   private function formOrderHandler(int $userId, string $info)
   {
     return $this->orders->formOrder($userId, $info);
+  }
+
+  /**
+   * @param int $userId
+   *
+   * @return array $usersOrders
+   */
+  private function usersOrdersHandler(int $userId)
+  {
+    $orders = $this->orders->usersOrders($userId);
+//    echo 'first orders: ';
+//    print_r($orders);
+//    echo '<hr>';
+
+
+    foreach ($orders as &$order) {
+//      echo "orders id: {$order['id']}; ";
+
+      $orderId = $order['id'];
+      $products = $this->orders->ordersProducts($userId, $orderId);
+//      echo "products of order $orderId: ";
+//      print_r($products);
+//      echo '<hr>';
+
+      $order['products'] = $products;
+
+//      echo 'массив с продуктами: ';
+//      print_r($order['products']);
+//      echo '<hr>';
+    }
+//    echo 'then orders: ';
+//    print_r($orders);
+//    echo '<hr>';
+
+    // selectOrdersProducts
+    return $orders;
   }
 }

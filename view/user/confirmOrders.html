@@ -9,9 +9,7 @@
 
 {{ content_data.text }}
 
-{% for order in content_data.orders %}
 
-<h3>ORDER ID: {{ order.id }}</h3>
 <table id="cart-table" class="cart-table js-cart-table">
   
   <thead>
@@ -26,23 +24,29 @@
   </thead>
   
   <tbody>
-
-
-  {% for product in order.products %}
+  
+  {% for product in content_data.products %}
+  
   <tr data-id="{{ product.id }}">
     <td><img src="{{ product.img }}" class="cart-table__img" alt="">{{ product.img }}</td>
     <td><p>{{ product.product_id }} - {{ product.name }}</p></td>
     <td><p><span class="js-cart-price">{{ product.price }}</span> Р</p></td>
     <td><p><span>{{ product.quantity }}</span></p>
     </td>
-    <td><p><span class="">{{ product.quantity * product.price }}</span> Р</p></td>
+    <td><p><span class="js-cart-total">{{ product.quantity * product.price }}</span> Р</p></td>
   </tr>
   {% endfor %}
   </tbody>
 </table>
-{% endfor %}
 
 
+{% if session.confirmOrder %}
+<form method="post">
+  <label for="info">Напишите дополнительную информацию и ваши пожелания, если считаете нужным: </label>
+  <textarea name="info" id="info" cols="30" rows="10" data-user="{{ session.logged_user }}"></textarea>    
+  <p><input type="submit" name="order" value="Оформить заказ"/></p>
+</form>
+{% endif %}
 
 {% endblock %}
 

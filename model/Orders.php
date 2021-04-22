@@ -63,9 +63,9 @@ class Orders
 
   }
 
-  public function getOrders($order_id)
+  public function getOrders($userId)
   {
-    Db::getInstance()->select('select orders.id              as order_id,
+    return Db::getInstance()->select('select orders.id              as order_id,
        orders.additional_info as info,
        g.name                 as name,
        g.status as status,
@@ -81,7 +81,34 @@ from orders
          inner join orders_products op on orders.id = op.order_id
          inner join goods g on op.product_id = g.id
          inner join categories cat on g.category = cat.id_category
-where `orders`.`id` = :id',
-      ['id' => $order_id]);
+where `orders`.`user_id` = :id',
+      ['id' => $userId]);
+  }
+
+  public function usersOrders($userId) {
+    return Db::getInstance()->select('select * from `orders` where `user_id` = :user_id', ['user_id' => $userId]);
+  }
+
+  public function ordersProducts($userId, $orderId)
+  {
+    return Db::getInstance()->select('
+    select orders.id              as order_id,
+       orders.additional_info as info,
+       g.name                 as name,
+       g.status as status,
+       product_id,
+       quantity,
+       price,
+       category,
+       description,
+       img,
+       (`quantity` * `price`) as `sum`
+
+from orders
+         inner join orders_products op on orders.id = op.order_id
+         inner join goods g on op.product_id = g.id
+         inner join categories cat on g.category = cat.id_category
+where `orders`.`user_id` = :user_id and order_id = :order_id
+    ', ['user_id' => $userId, 'order_id' => $orderId]);
   }
 }
