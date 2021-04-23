@@ -24,8 +24,8 @@
       {{ product_item.img }}
     </a>
     </li>
-    <li>{{ product_item.category }}</li>
-    <li>{{ product_item.status }}</li>
+    <li>Категория: {{ product_item.category }}</li>
+    <li>Статус: {{ product_item.status }}</li>
   </ul>
   
   {% if session.logged_user %}

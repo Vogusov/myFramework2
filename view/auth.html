@@ -3,9 +3,17 @@
   <a href="/index.php?path=user/account">Личный кабинет</a> | <a href="#" class="js-user-logout">Выйти</a> |
   <a href="/index.php?path=order/{{ session.logged_user }}" >Заказы</a>
 </p>
+
+{% if session.role == admin_role %}
+<p>
+  <a href="/index.php?path=admin/">Admin</a>
+</p>
+{% endif %}
 {% else %}
 <p>
   <a href="/index.php?path=user/login">Войти / Зарегистрироваться</a>
 </p>
+
+
 {% endif %}
 

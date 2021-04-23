@@ -14,6 +14,13 @@
 
 <a href="#" class="js-user-logout">Выйти</a>
 
+
+{% if session.role == admin_role %}
+<p>
+  <a href="/index.php?path=admin/">Admin</a>
+</p>
+{% endif %}
+
 {% endblock %}
 
 

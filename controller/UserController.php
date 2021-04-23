@@ -45,7 +45,8 @@ class UserController extends Controller
           if (isset($_SESSION['logged_user'])) {
             $id = $_SESSION['logged_user'];
             $userData = $this->user->getData($id);
-            print_r($userData);
+            $_SESSION['role'] = $userData['role'];
+//            print_r($userData);
             $userName = $userData['name'];
             $userEmail = $userData['email'];
             $userPhone = $userData['phone'];

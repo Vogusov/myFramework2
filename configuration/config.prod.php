@@ -1,12 +1,12 @@
 <?php
-$config['db_user'] = 'root';
-$config['db_password'] = 'root';
-$config['db_base'] = 'fw2';
+$config['db_user'] = 'o95220zp_fw2';
+$config['db_password'] = 'Test0000';
+$config['db_base'] = 'o95220zp_fw2';
 $config['db_host'] = 'localhost';
 $config['db_charset'] = 'UTF-8';
 
-$config['path_root'] = __DIR__;
-$config['path_public'] = $config['path_root'] . '/../public';
+$config['path_root'] = $_SERVER['DOCUMENT_ROOT'];
+$config['path_public'] = $config['path_root'] . '/../public_html';
 $config['path_model'] = $config['path_root'] . '/../model';
 $config['path_controller'] = $config['path_root'] . '/../controller';
 $config['path_cache'] = $config['path_root'] . '/../cache';
@@ -20,8 +20,6 @@ $config['path_templates'] = $config['path_root'] . '/../view';
 $config['path_logs'] = $config['path_root'] . '/../logs';
 
 $config['sitename'] = 'Интернет-магазин';
-
-$config['admin_role'] = '1';
 
 
 // namespace

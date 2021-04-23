@@ -2,7 +2,7 @@
 
 namespace Fw2\Controller;
 
-use Fw2\Model\Goods as Goods;
+use Fw2\Model\User as User;
 
 class CatalogController extends Controller
 {

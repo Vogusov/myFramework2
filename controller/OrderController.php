@@ -111,31 +111,14 @@ class OrderController extends Controller
   private function usersOrdersHandler(int $userId)
   {
     $orders = $this->orders->usersOrders($userId);
-//    echo 'first orders: ';
-//    print_r($orders);
-//    echo '<hr>';
-
 
     foreach ($orders as &$order) {
-//      echo "orders id: {$order['id']}; ";
 
       $orderId = $order['id'];
       $products = $this->orders->ordersProducts($userId, $orderId);
-//      echo "products of order $orderId: ";
-//      print_r($products);
-//      echo '<hr>';
 
       $order['products'] = $products;
-
-//      echo 'массив с продуктами: ';
-//      print_r($order['products']);
-//      echo '<hr>';
     }
-//    echo 'then orders: ';
-//    print_r($orders);
-//    echo '<hr>';
-
-    // selectOrdersProducts
     return $orders;
   }
 }

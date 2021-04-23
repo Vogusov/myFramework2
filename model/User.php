@@ -60,6 +60,8 @@ class User
       $errors[] = 'Введите логин!';
     }
 
+//
+
     if (($data['password']) == '') {
       $errors[] = 'Введите пароль!';
     }
@@ -161,9 +163,10 @@ class User
 
   public function unsetLoggedSession()
   {
-    echo 'Удаяляемая сессия: ';
-    print_r($_SESSION['logged_user']);
+//    echo 'Удаяляемая сессия: ';
+//    print_r($_SESSION['logged_user']);
     unset($_SESSION['logged_user']);
+    unset($_SESSION['role']);
     if (!isset($_SESSION['logged_user'])) {
       return true;
     } else {
