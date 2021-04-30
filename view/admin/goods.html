@@ -1,0 +1,38 @@
+{% extends "admin/index.html" %}
+
+{% block admin_content %}
+{{ content_data.text }}
+
+
+<table class="admin-table" style='text-align:center;' border='1' width='100%'>
+  <tr>
+    <td><p>id</p></td>
+    <td><p>Изображение</p></td>
+    <td>Наименование</td>
+    <td>Цена</td>
+    <td><p>Описание</p></td>
+    <td>Название изображения</td>
+  </tr>
+  
+
+  {% for product in admin_content.products %}
+  <tr>
+    
+    <td>{{ product.id }}</td>
+    <td><img src="{{ product.img }}" class="admin-table__img" alt="{{ product.img }}"></td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.description }}</td>
+    <td>{{ product.img }}</td>
+    <td><a href="#">Редактировать</a></td>
+    <td><a href="#">Удалить</a></td>
+  </tr>
+  {% endfor %}
+  
+  
+</table>
+
+
+{% endblock %}
+
+
