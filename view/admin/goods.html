@@ -4,11 +4,12 @@
 {{ content_data.text }}
 
 
-<table class="admin-table" style='text-align:center;' border='1' width='100%'>
+<table class="admin-table js-admin-goods-table" style='text-align:center;' border='1' width='100%'>
   <tr>
     <td><p>id</p></td>
     <td><p>Изображение</p></td>
     <td>Наименование</td>
+    <td>Категория</td>
     <td>Цена</td>
     <td><p>Описание</p></td>
     <td>Название изображения</td>
@@ -16,16 +17,17 @@
   
 
   {% for product in admin_content.products %}
-  <tr>
+  <tr data-id="{{ product.id }}">
     
     <td>{{ product.id }}</td>
     <td><img src="{{ product.img }}" class="admin-table__img" alt="{{ product.img }}"></td>
     <td>{{ product.name }}</td>
+    <td>{{ product.category }}</td>
     <td>{{ product.price }}</td>
     <td>{{ product.description }}</td>
     <td>{{ product.img }}</td>
-    <td><a href="#">Редактировать</a></td>
-    <td><a href="#">Удалить</a></td>
+    <td><button class="js-admin-product-edit" data-id="{{ product.id }}">Редактировать</button></td>
+    <td><button class="js-admin-product-delete" data-id="{{ product.id }}">Удалить</button></td>
   </tr>
   {% endfor %}
   

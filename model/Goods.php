@@ -8,15 +8,27 @@ class Goods {
 
     public static function getAll()
     {
-      $query = "SELECT * FROM `goods`";
+      $query = "SELECT * FROM `goods` where `deleted` != '1';";
 
       return Db::getInstance()->select(
           $query, []);
     }
 
-  public static function getProduct($id)
+
+  public static function getProduct($productId)
   {
+    $query = "select * from `goods` where `id` = :id and `deleted` != '1';";
+
     return Db::getInstance()->getRow(
-      "select * from `goods` where `id` = :id;" , ['id' => $id]);
+      $query, ['id' => $productId]);
+  }
+
+
+  public static function deleteProduct($productId)
+  {
+    $query = "update `goods` set `deleted` = '1' where `goods`.`id` = :productId;";
+
+    return Db::getInstance()->delete(
+      $query, ['productId' => $productId]);
   }
 }

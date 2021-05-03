@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 23 2021 г., 15:20
+-- Время создания: Май 03 2021 г., 19:13
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.4.14
 
@@ -83,22 +83,23 @@ CREATE TABLE `goods` (
   `category` int NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `status` int NOT NULL,
-  `img` varchar(100) DEFAULT NULL
+  `img` varchar(100) DEFAULT NULL,
+  `deleted` enum('0','1') DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `goods`
 --
 
-INSERT INTO `goods` (`id`, `name`, `price`, `category`, `description`, `status`, `img`) VALUES
-(1, 'Good 1', 100, 1, 'Описание товара 1', 1, 'product_1001.jpg'),
-(2, 'Good 2', 120, 2, 'Описание товара 2', 1, 'product_1002.jpg'),
-(3, 'Good 3', 48, 2, 'Описание товара 3', 1, 'product_1003.jpg'),
-(4, 'Good 4', 100500, 2, 'Описание товара 4', 1, 'product_1004.jpg'),
-(5, 'Good 5', 2001, 3, 'Описание товара 5', 4, 'product_1005.jpg'),
-(6, 'Good 6', 1020, 4, 'Описание товара 6', 1, 'product_1006.jpg'),
-(7, 'Good 7', 1, 4, 'Описание товара 7', 1, 'product_1007.jpg'),
-(8, 'Good 8', 800, 5, 'Описание товара 8', 1, 'product_1008.jpg');
+INSERT INTO `goods` (`id`, `name`, `price`, `category`, `description`, `status`, `img`, `deleted`) VALUES
+(1, 'Good 1', 100, 1, 'Описание товара 1', 1, 'product_1001.jpg', '0'),
+(2, 'Good 2', 120, 2, 'Описание товара 2', 1, 'product_1002.jpg', '0'),
+(3, 'Good 3', 48, 2, 'Описание товара 3', 1, 'product_1003.jpg', '0'),
+(4, 'Good 4', 100500, 2, 'Описание товара 4', 1, 'product_1004.jpg', '0'),
+(5, 'Good 5', 2001, 3, 'Описание товара 5', 4, 'product_1005.jpg', '0'),
+(6, 'Good 6', 1020, 4, 'Описание товара 6', 1, 'product_1006.jpg', '0'),
+(7, 'Good 7', 1, 4, 'Описание товара 7', 1, 'product_1007.jpg', '0'),
+(8, 'Good 8', 800, 5, 'Описание товара 8', 1, 'product_1008.jpg', '0');
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `phone`, `login`, `password`, `role`, `datetime`) VALUES
-(2, 'admin', 'admin@admin.ru', '4964040', 'admin', '$2y$10$RU5llEv8w/ELpQcwEqvDI.H2CPcIRgDBaJCwZIykwI0y5sADHkf9.', 0, '2021-04-23 13:36:26'),
+(2, 'admin', 'admin@admin.ru', '4964040', 'admin', '$2y$10$RU5llEv8w/ELpQcwEqvDI.H2CPcIRgDBaJCwZIykwI0y5sADHkf9.', 1, '2021-04-23 13:36:26'),
 (27, 'aaNmae', 'aa@aa.a', '13124235346', 'aa', '$2y$10$IkhPG6S41xVyiAEP4ObZCemj81jVhgkF4hhVcQ1.mdMGvsE3.WLZ2', 0, '2021-03-24 13:58:01'),
 (28, 'aaNmae', 'aa@aa.aa', '131242353461', 'aaa', '$2y$10$k51v2oW4BBfJ64Jf47DgO.TyQ7CSZJuqopakda/cIYe2tcXSxEqRy', 0, '2021-03-24 13:59:10'),
 (29, 'ssname', 'ss@ss.s', '79869675745', 'ss', '$2y$10$GK6P5HtzcN1FqbF4ny.QVuOB0TwmXoXBf.CRCyFxOeBkM7dafj3m6', 0, '2021-03-24 14:02:15'),
@@ -264,7 +265,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT для таблицы `categories`

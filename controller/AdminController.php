@@ -10,8 +10,7 @@ class AdminController extends Controller
   protected Goods $goods;
   function __construct()
   {
-    $this->goods = new Goods();
-    $this->products = $this->goods::getAll();
+    $this->products = Goods::getAll();
     parent::__construct();
     $this->title = 'Панель управления и администрирования';
     $this->view = 'admin/goods.html';
@@ -24,7 +23,6 @@ class AdminController extends Controller
   }
 
   function goods($data) {
-//    print_r($this->products);
     return [
       'sitename' => $this->sitename,
       'content_data' => [

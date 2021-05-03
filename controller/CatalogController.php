@@ -2,8 +2,8 @@
 
 namespace Fw2\Controller;
 
-use Fw2\Model\User as User;
-
+//use Fw2\Model\User as User;
+use Fw2\Model\Goods as Goods;
 class CatalogController extends Controller
 {
 
@@ -21,7 +21,7 @@ class CatalogController extends Controller
   function index(array $data = [])
   {
     $id = !isset($data['id']) ? 10 : $data['id'];
-    $goods = Goods::getAllGoods();
+    $goods = Goods::getAll();
 
     return [
       'sitename' => $this->sitename,
