@@ -1,0 +1,47 @@
+{% extends "admin/index.html" %}
+
+{% block admin_content %}
+
+{% set product = admin_content.product %}
+
+
+<div class="edit__container">
+  
+  
+  <div class="edit__image">
+    <img src="{{ product.img }}" alt="{{ product.img }}">
+  </div>
+  
+  <div class="edit__form">
+    <form method="post" enctype="multipart/form-data">
+      <label for="name">Название товара: </label>
+      <input id="name" type="text" name="name" value="{{ product.name }}"><br>
+      
+      <label for="price">Цена товара: </label>
+      <input id="price" type="text" name="price" value="{{ product.price }}"><br>
+  
+      <label for="category">Категория товара: </label>
+      <input id="category" type="text" name="category" value="{{ product.category }}"><br>
+      
+      <label for="description">Описание товара: </label>
+      <textarea id="description" cols="20" rows="5" name="description">{{ product.description }}</textarea><br>
+  
+      <label for="status">Цена товара: </label>
+      <input id="status" type="text" name="status" value="{{ product.status }}"><br>
+  
+      <label for="img">Картинка товара: </label>
+      <input id="img" type="text" name="img" value="{{ product.img }}"><br>
+  
+      <input type="hidden" name="id" value="{{ product.id }}">
+      <!--      <input type="hidden" name="MAX_FILE_SIZE" value="30000"/>-->
+      <!--      <p>Загрузите картинку 500x500px:</p>-->
+      <!--      <input type="file" name="product-image" accept="image/jpeg,image/png,image/gif">-->
+<!--      <input type="hidden" name="product-img-name" value="{{ product.img }}"><br><br>-->
+      <input type="submit" name="save-edited" value="Сохранить">
+    </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

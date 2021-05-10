@@ -26,7 +26,7 @@
     <td>{{ product.price }}</td>
     <td>{{ product.description }}</td>
     <td>{{ product.img }}</td>
-    <td><button class="js-admin-product-edit" data-id="{{ product.id }}">Редактировать</button></td>
+    <td><a href="/index.php?path=adminGoods/edit/{{ product.id }}">Редактировать</a></td>
     <td><button class="js-admin-product-delete" data-id="{{ product.id }}">Удалить</button></td>
   </tr>
   {% endfor %}

@@ -7,7 +7,6 @@ use Fw2\Model\Goods as Goods;
 class AdminGoodsController extends Controller
 {
   public array $products;
-  protected Goods $goods;
 
   function __construct()
   {
@@ -20,7 +19,7 @@ class AdminGoodsController extends Controller
 
   function index($data)
   {
-    if (!isset($_POST)) {
+    if (!isset($_POST['action'])) {
       return [
         'sitename' => $this->sitename,
         'content_data' => [
@@ -44,67 +43,61 @@ class AdminGoodsController extends Controller
         $productId = $_POST['id'];
         $rows = Goods::deleteProduct($productId);
         return $rows;
-//          [
-//          'sitename' => $this->sitename,
-//          'content_data' => [
-//            'text' => 'Добавление и редактирование товаров',
-//          ],
-//          'admin_content' => [
-//            'products' => $this->products,
-//            'rows' => $rows
-//          ],
-//          'title' => $this->title,
-//          'view' => 'admin/goods.html'
-//        ];
+
 
     }
 
 
+
   }
 
+  function edit($data) {
+    if (!isset($data['id'])) {
+      echo 'Нет ИД товара';
+    }
+    $productId = $data['id'];
 
+    if (isset($_POST['save-edited']))
+    return self::saveEdited($productId);
 
-  /*
+    $product = Goods::getProduct($productId);
+//    print_r($product);
 
-  function goods($data) {
-//    print_r($this->products);
-    return [
+    $result = [
       'sitename' => $this->sitename,
-      'content_data' => [
-        'text' => 'Добавление и редактирование товаров',
-      ],
+      'content_data' => [],
       'admin_content' => [
-        'products' => $this->products
+        'product' => $product
       ],
-      'title' => $this->title,
-      'view' => 'admin/goods.html'
+      'title' => 'Редактирование товара',
+      'view' => 'admin/edit.html'
     ];
+
+    return $result;
   }
 
-  function orders($data) {
+  private function saveEdited($productId) {
+    if (!isset($_POST['save-edited'])) {
+      echo 'Нет поста!';
+    }
 
-      return [
-        'sitename' => $this->sitename,
-        'content_data' => [
-          'text' => 'Управление заказами',
-        ],
-        'title' => $this->title,
-        'view' => 'admin/orders.html'
-      ];
+    if ($productId != $_POST['id']) {
+      echo 'Что-то не так с ID товара! ';
+    }
 
+    $product = [];
+    $product['id'] = $_POST['id'];
+    $product['name'] = $_POST['name'];
+    $product['price'] = $_POST['price'];
+    $product['category'] = $_POST['category'];
+    $product['description'] = $_POST['description'];
+    $product['status'] = $_POST['status'];
+    $product['img'] = $_POST['img'];
+
+    $rows = Goods::editProduct($product);
+    $this->products = Goods::getAll();
+    return self::index([]);
   }
 
-  function content($data) {
 
-    return [
-      'sitename' => $this->sitename,
-      'content_data' => [
-        'text' => 'Редактирование контента',
-      ],
-      'title' => $this->title,
-      'view' => 'admin/content.html'
-    ];
-  }
-
-  */
 }
