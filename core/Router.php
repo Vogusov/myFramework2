@@ -80,6 +80,8 @@ class Router
         $twig = new \Twig\Environment($loader);
         $twig->addGlobal('session', $_SESSION);
         $twig->addGlobal('admin_role', Config::get('admin_role'));
+        $twig->addGlobal('img_path', Config::get('catalog_images'));
+        $twig->addGlobal('img_sm_path', Config::get('catalog_images_sm'));
         echo $template = $twig->render($view, $data);
 
 

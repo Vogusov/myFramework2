@@ -12,7 +12,8 @@
   "require": {
     "twig/twig": "^v3.3.0",
     "ext-json": "*",
-    "ext-mysql_xdevapi": "*"
+    "ext-mysql_xdevapi": "*",
+    "ext-gd": "*"
   },
 
   "autoload": {
