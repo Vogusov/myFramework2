@@ -16,8 +16,8 @@ $config['path_migrations'] = $config['path_data'] . '/../migrate';
 $config['path_commands'] = $config['path_root'] . '/../lib/commands';
 $config['path_libs'] = $config['path_root'] . '/../lib';
 $config['path_templates'] = $config['path_root'] . '/../view';
-$config['catalog_images'] = '/images/catalog/';
-$config['catalog_images_sm'] = '/images/catalog_sm/';
+$config['catalog_images'] = 'images/catalog/';
+$config['catalog_images_sm'] = 'images/catalog_sm/';
 
 $config['path_logs'] = $config['path_root'] . '/../logs';
 

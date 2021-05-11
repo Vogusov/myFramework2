@@ -98,16 +98,18 @@ class AdminGoodsController extends Controller
 
       // валидация картинки
       if ($_FILES['file-img']['error']) {
+        print_r($_FILES['file-img']['error']);
         echo 'Ошибка загрузки файла';
       } elseif ($_FILES['file-img']['size'] > 1000000) {
         echo "Файл слишком большой. Заргружаемый файл должен быть не больше 1Мб <br> <a href=\"index.php\">К галерее</a>";
       } elseif (strlen($img_file_name) > 30) {
-        echo "Имя файла слишком длинное. Переименуйте файл перед загрузкой. Имя файла должно быть короче 26 символов.";
+        echo "Имя файла слишком длинное. Переименуйте файл перед загрузкой. Имя файла должно быть короче 30 символов.";
       } elseif (
         $_FILES['file-img']['type'] == 'image/jpeg' ||
         $_FILES['file-img']['type'] == 'image/png' ||
         $_FILES['file-img']['type'] == 'image/gif'
       ) {
+        print_r($_FILES['file-img']['tmp_name']);
         // копируем картинку в нашу папку, уменьшаем и копируем в папку с маленькими
         if (copy($_FILES['file-img']['tmp_name'], $path)) {
           Funcs::resizeImg($path, $path_sm, Config::get('catalog_sm_img_size'));
@@ -126,8 +128,12 @@ class AdminGoodsController extends Controller
       $product['category'] = (int)trim(strip_tags($_POST['category']));
       $product['description'] = trim(strip_tags($_POST['description']));
       $product['status'] = trim(strip_tags($_POST['status']));
-      if (isset($img_file_name)) {
+      if (!empty($img_file_name)) {
+//        echo " name: $img_file_name !";
         $product['img'] = $img_file_name;
+      } else {
+        $prod = Goods::getProduct($productId);
+        $product['img'] = $prod['img'];
       }
     }
 
