@@ -3,15 +3,17 @@
 namespace Fw2\Controller;
 
 use Fw2\Core\Config;
-use Fw2\Model\Goods as Goods;
 use Fw2\Model\Funcs as Funcs;
+use Fw2\Model\Goods as Goods;
 
 class AdminGoodsController extends Controller
 {
   public array $products;
+  public $admC;
 
   function __construct()
   {
+    $this->admC = new AdminController();
     $this->products = Goods::getAll();
     parent::__construct();
     $this->title = 'Управление товарами';
@@ -45,11 +47,7 @@ class AdminGoodsController extends Controller
         $productId = $_POST['id'];
         $rows = Goods::deleteProduct($productId);
         return $rows;
-
-
     }
-
-
   }
 
   function edit($data)
@@ -59,11 +57,31 @@ class AdminGoodsController extends Controller
     }
     $productId = $data['id'];
 
-    if (isset($_POST['save-edited']))
-      return self::saveEdited($productId);
+    // Если ПОСТ, то сохраняем данные о продукте
+    if (isset($_POST['save-edited'])) {
+      $rows = self::saveEdited($productId);
+      if ($rows <= 0) {
+        echo "Товар не изменен";
+      }
+      $products = Goods::getAll();
+      $this->admC->index([]);
 
+//      return
+//        [
+//          'sitename' => $this->sitename,
+//          'content_data' => [
+//            'text' => 'Добавление и редактирование товаров',
+//          ],
+//          'admin_content' => [
+//            'products' => $products
+//          ],
+//          'title' => $this->title,
+//          'view' => 'admin/goods.html'
+//        ];
+    }
+
+    // по умолчанию открываем форму редактирования
     $product = Goods::getProduct($productId);
-//    print_r($product);
 
     $result = [
       'sitename' => $this->sitename,
@@ -74,11 +92,15 @@ class AdminGoodsController extends Controller
       'title' => 'Редактирование товара',
       'view' => 'admin/edit.html'
     ];
-
     return $result;
   }
 
-  private function saveEdited($productId)
+
+  /**
+   * Обработка и сохранение каринки.
+   * todo: Разобрать по классам и методам
+   */
+  private function saveEdited($productId): int
   {
     if (!isset($_POST['save-edited'])) {
       echo 'Нет поста!';
@@ -89,9 +111,8 @@ class AdminGoodsController extends Controller
     }
 
     //картинка:
-
     if (isset($_FILES['file-img'])) {
-      $img_file_name =  Funcs::translit($_FILES['file-img']['name']);
+      $img_file_name = Funcs::translit($_FILES['file-img']['name']);
       $path = Config::get('catalog_images') . $img_file_name;
       $path_sm = Config::get('catalog_images_sm') . $img_file_name;
       $file_size = $_FILES['file-img']['size'];
@@ -120,7 +141,6 @@ class AdminGoodsController extends Controller
         }
       }
 // todo: если не загружена картинка, назначить ее имя. Или сохранить имеющуюся
-
       $product = [];
       $product['id'] = $productId;
       $product['name'] = trim(strip_tags($_POST['name']));
@@ -136,17 +156,39 @@ class AdminGoodsController extends Controller
         $product['img'] = $prod['img'];
       }
     }
-
-      // если не загружена картинка, то вводим ее имя в поле
+    // если не загружена картинка, то вводим ее имя в поле
 //    if (isset($_POST['img']))
 //      $product['img'] = $_POST['img'];
 
-      $rows = Goods::editProduct($product);
-      $this->products = Goods::getAll();
+    $rows = Goods::editProduct($product);
+//    $products = Goods::getAll();
+    return $rows;
+
+  }
+
+  function addNew()
+  {
+    // по умолчанию открываем страницу с формой добавления товара
+    if (!isset($_POST['add-new']))
+      return [
+        'sitename' => $this->sitename,
+        'content_data' => [],
+        'admin_content' => [
+          'products' => $this->products
+        ],
+        'title' => 'Добавление нового товара',
+        'view' => 'admin/addNew.html'
+      ];
+
+    // если есть пост, то выполняем сохранение и возврощаем индексную страницу
+    $productData = $_POST;
+    $productId = self::saveNew($productData);
+    if ($productId)
+
       return [
         'sitename' => $this->sitename,
         'content_data' => [
-          'text' => 'Добавление и редактирование товаров',
+          'text' => "Новы товар успешно сохранен с ID $productId! ",
         ],
         'admin_content' => [
           'products' => $this->products
@@ -154,8 +196,23 @@ class AdminGoodsController extends Controller
         'title' => $this->title,
         'view' => 'admin/goods.html'
       ];
-
-    }
-
-
   }
+
+
+  private static function saveNew(array $productData): int
+  {
+    $data = [
+      'name' => trim($productData['name']),
+      'price' => trim($productData['price']),
+      'category' => trim($productData['category']),
+      'description' => trim($productData['description']),
+      'status' => trim($productData['status']),
+      'img' => trim($productData['img']),
+    ];
+
+
+    return $productId = Goods::saveNewProduct($data);
+  }
+
+
+}

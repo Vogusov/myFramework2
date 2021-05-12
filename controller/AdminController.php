@@ -7,7 +7,7 @@ use \Fw2\Model\Goods as Goods;
 class AdminController extends Controller
 {
   public array $products;
-  protected Goods $goods;
+//  protected Goods $goods;
   function __construct()
   {
     $this->products = Goods::getAll();

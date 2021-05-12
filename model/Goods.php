@@ -6,8 +6,6 @@ use Fw2\Core\Db as Db;
 
 class Goods
 {
-
-
   public static function getAll()
   {
     $query = "SELECT * FROM `goods` where `deleted` != '1';";
@@ -35,7 +33,7 @@ class Goods
   }
 
 
-  public static function editProduct( array $product)
+  public static function editProduct(array $product)
   {
     $query = "update `goods` set
                    `name` = :productName,
@@ -48,13 +46,27 @@ class Goods
 
     return Db::getInstance()->update(
       $query, [
-        'productId' => $product['id'],
-        'productName' => $product['name'],
-        'productPrice' => $product['price'],
-        'productCategory' => $product['category'],
-        'productDescription' => $product['description'],
-        'productStatus' => $product['status'],
-        'productImg' => $product['img']
-      ]);
+      'productId' => $product['id'],
+      'productName' => $product['name'],
+      'productPrice' => $product['price'],
+      'productCategory' => $product['category'],
+      'productDescription' => $product['description'],
+      'productStatus' => $product['status'],
+      'productImg' => $product['img']
+    ]);
+  }
+
+  public static function saveNewProduct(array $productData): int
+  {
+    $query = "insert into `goods` (`name`, `price`, `category`, `description`, `status`, `img`) 
+                values (:name, :price, :category, :description, :status, :img);";
+    return Db::getInstance()->insert($query, [
+      'name' => $productData['name'],
+      'price' => $productData['price'],
+      'category' => $productData['category'],
+      'description' => $productData['description'],
+      'status' => $productData['status'],
+      'img' => $productData['img']
+    ]);
   }
 }

@@ -5,14 +5,14 @@
 {% set product = admin_content.product %}
 
 
-<div class="edit__container">
+<div>
   
   
-  <div class="edit__image">
+  <div>
     <img src="{{ img_sm_path }}{{ product.img }}" alt="{{ product.img }}">
   </div>
   
-  <div class="edit__form">
+  <div>
     <form method="post" enctype="multipart/form-data">
       <label for="name">Название товара: </label>
       <input id="name" type="text" name="name" value="{{ product.name }}"><br>
@@ -37,13 +37,12 @@
       <input type="hidden" name="product-img-name" value="{{ product.img }}"><br><br>
   
       <label for="file-img">Загрузите картинку 500x500px:</label>
-      <input id="file-img" type="file" name="file-img" accept="image/jpeg,image/png,image/gif"
-             ><br><br>
+      <input id="file-img" type="file" name="file-img" accept="image/jpeg,image/png,image/gif"><br><br>
       
       <input type="submit" name="save-edited" value="Сохранить">
     </form>
   </div>
-
+ 
 </div>
 
 

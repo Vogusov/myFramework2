@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(111) NOT NULL,
-  `price` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `category` int NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `status` int NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `goods` (
 
 LOCK TABLES `goods` WRITE;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (1,'Good 1',100,1,'Описание товара 1',1,'product_1001.jpg','0'),(2,'Good 2',120,2,'Описание товара 2',1,'product_1002.jpg','0'),(3,'Good 3',48,2,'Описание товара 3',1,'product_1003.jpg','0'),(4,'Good 4',100500,2,'Описание товара 4',1,'product_1004.jpg','0'),(5,'Good 5',2001,3,'Описание товара 5',4,'product_1005.jpg','0'),(6,'Good 6',1020,4,'Описание товара 6',1,'product_1006.jpg','0'),(7,'Good 7',1,4,'Описание товара 7',1,'product_1007.jpg','0'),(8,'Good 8',800,5,'Описание товара 8',1,'product_1008.jpg','1');
+INSERT INTO `goods` VALUES (1,'Good 1',1001.00,1,'Описание товара 1',1,'ps4.jpg','0'),(2,'Good 2',120.00,2,'Описание товара 2',1,'product_105.jpg','0'),(3,'Good 3',48.00,2,'Описание товара 3',1,'product_102.jpg','0'),(4,'Good 4',100500.00,2,'Описание товара 4',1,'product_1004.jpg','0'),(5,'Good 5',2001.00,3,'Описание товара 5',4,'product_1005.jpg','0'),(6,'Good 6',1020.00,4,'Описание товара 6',1,'product_1006.jpg','0'),(7,'Good 7',2000.00,4,'Описание товара 7',1,'product_1007.jpg','0'),(8,'Good 8',800.00,5,'Описание товара 8',1,'product_1008.jpg','1');
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-10 16:00:47
+-- Dump completed on 2021-05-12 14:49:11
