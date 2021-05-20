@@ -10,7 +10,7 @@ class AdminController extends Controller
 //  protected Goods $goods;
   function __construct()
   {
-    $this->products = Goods::getAll();
+    $this->products = Goods::getAllWithDeleted();
     parent::__construct();
     $this->title = 'Панель управления и администрирования';
     $this->view = 'admin/goods.html';

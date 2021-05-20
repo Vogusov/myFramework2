@@ -56,11 +56,14 @@ class User
   {
     $errors = [];
 
-    if (trim($data['login']) == '') {
+    $data['login'] = trim($data['login']);
+    $data['name'] = trim($data['name']);
+    $data['email'] = trim($data['email']);
+    $data['phone'] = trim($data['phone']);
+
+    if ($data['login'] == '') {
       $errors[] = 'Введите логин!';
     }
-
-//
 
     if (($data['password']) == '') {
       $errors[] = 'Введите пароль!';
@@ -70,26 +73,35 @@ class User
       $errors[] = 'Повторный пароль введен неверно!';
     }
 
-    if (trim($data['name']) == '') {
+    if ($data['name'] == '') {
       $errors[] = 'Введите имя!';
     }
 
-    if (trim($data['email']) == '') {
+    if ($data['email'] == '') {
       $errors[] = 'Введите почту!';
     }
 
-    if (trim($data['phone']) == '') {
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+      $errors[] = "E-mail адрес {$data['email']} указан неверно.";
+    }
+
+    if ($data['phone'] == '') {
       $errors[] = 'Введите телефон!';
+    }
+
+    // Проверка на логи admin
+    if (strtolower($data['login']) === 'admin') {
+      $errors[] = "Нельзя использовать логин {$data['login']}";
     }
 
     // Проверка на существование одинакового логина
     if ($this->loginExists($data['login'])) {
-      $errors[] = 'Пользователь с таким логином уже существует';
+      $errors[] = "Пользователь с таким логином ( {$data['login']} ) уже существует";
     }
 
     // Проверка на существование одинакового email
     if ($this->emailExists($data['email'])) {
-      $errors[] = 'Пользователь с такой почтой уже существует';
+      $errors[] = "Пользователь с такой почтой ( {$data['email']} ) уже существует";
     }
 
     // Проверка на существование одинакового телефона
@@ -99,38 +111,43 @@ class User
 
     if (empty($errors)) {
       $this->success = true;
-      echo "valid, data: " . print_r($data);
+//      echo "valid, data: " . print_r($data);
       return $data;
     } else {
       $this->success = false;
-      echo "invalid, errors: " . print_r($errors);
+//      echo "invalid, errors: " . print_r($errors);
       return $errors;
     }
   }
 
-
-// записываем в БД нового поьзователя
-  public function registrate(array $data)
+  /**
+   * @param array $data
+   * @return array
+   */
+  public function registrate(array $data): array
   {
-    $validatedData = $this->formIsValid($data);
-    if ($this->success) {
-      $login = $validatedData['login'];
-      $name = $validatedData['name'];
-      $password = $this->hashUserPassword($data['password']);
-      $email = $validatedData['email'];
-      $phone = $validatedData['phone'];
+    $validationResult = $this->formIsValid($data);
 
-      $validatedData['success'] = $this->success;
-      $validatedData['id'] = Db::getInstance()->insert(
+    if (!$this->success) {
+      $result['success'] = $this->success = false;
+      $result['errors'] = $validationResult;
+      return $result;
+    }
+
+      $login = $validationResult['login'];
+      $name = $validationResult['name'];
+      $password = $this->hashUserPassword($data['password']);
+      $email = $validationResult['email'];
+      $phone = $validationResult['phone'];
+
+      $result['success'] = $this->success;
+      $result['id'] = Db::getInstance()->insert(
         'insert into `users` (`login`, `name`, `password`, `email`, `phone`) values (:login, :name, :password, :email, :phone)',
         ['login' => $login, 'name' => $name, 'password' => $password, 'email' => $email, 'phone' => $phone]);
-      return $validatedData;
-    } else {
-      $validatedData['success'] = $this->success = false;
-      echo "Не зарегались(((";
-      return $validatedData;
-    }
+      return $result;
   }
+
+
 
 
 // Вход пользователя под учетной записью

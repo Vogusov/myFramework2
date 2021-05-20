@@ -153,49 +153,87 @@ class UserController extends Controller
 
 
   /**
+   * Функция устарела
    * Регистрация нового пользователя
+   *
    * @param array $data
    * @return array ['sitename', 'content_data', 'title', 'view']
    * */
+//  public function signup1()
+//  {
+//    // регистрация нового пользователя
+//    if (isset($_POST['reg'])) {
+//      $data = $_POST;
+//      $user = new User();
+//
+//      if ($result = $user->registrate($data)) {
+//
+//        if ($result['success']) {
+//          echo 'Есть результат! ';
+//          print_r($result);
+//          return $this->login($result);
+//
+//        } else {
+//          return [
+//            'sitename' => $this->sitename,
+//            'content_data' => [
+//              'message' => array_shift($result),
+//              'login' => $_POST['login'],
+//              'name' => $_POST['name'],
+//              'email' => $_POST['email'],
+//              'phone' => $_POST['phone'],
+//            ],
+//            'title' => 'Регистрация',
+//            'view' => 'user/registration.html'
+//          ];
+//        }
+//      }
+//
+//    } // если нет поста, отображается страница регистрации по умолчанию
+//    else {
+//      return [
+//        'sitename' => $this->sitename,
+//        'content_data' => [
+//          'message' => 'Зарегистрируйтесь на нашем сайте. Пожалуйста: ',
+//        ],
+//        'title' => 'Регистрация',
+//        'view' => 'user/registration.html'
+//      ];
+//    }
+//  }
+
+  /**
+   * открывает страницу регистрации
+   *
+   * @return array
+   */
+  public function signupPage()
+  {
+    return [
+      'sitename' => $this->sitename,
+      'content_data' => [
+        'message' => 'Зарегистрируйтесь на нашем сайте. Пожалуйста: ',
+      ],
+      'title' => 'Регистрация',
+      'view' => 'user/registration.html'
+    ];
+  }
+
+  /**
+   * принимает и обрабатывает форму регистрации пользователя
+   */
   public function signup()
   {
-    if (isset($_POST['reg'])) {
-      $data = $_POST;
-      $user = new User();
-
-      if ($result = $user->registrate($data)) {
-
-        if ($result['success']) {
-          echo 'Есть результат! ';
-          print_r($result);
-          return $this->login($result);
-
-        } else {
-          return [
-            'sitename' => $this->sitename,
-            'content_data' => [
-              'message' => array_shift($result),
-              'login' => $_POST['login'],
-              'name' => $_POST['name'],
-              'email' => $_POST['email'],
-              'phone' => $_POST['phone'],
-            ],
-            'title' => 'Регистрация',
-            'view' => 'user/registration.html'
-          ];
-        }
-      }
-    } // если нет поста, отображается страница регистрации по умолчанию
-    else {
-      return [
-        'sitename' => $this->sitename,
-        'content_data' => [
-          'message' => 'Зарегистрируйтесь на нашем сайте. Пожалуйста: ',
-        ],
-        'title' => 'Регистрация',
-        'view' => 'user/registration.html'
-      ];
+    $_SESSION['asAjax'] = true;
+    if (!$_POST) {
+      die('Нет данных нового пользователя для обработки');
     }
+
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+
+    $user = new User();
+    return json_encode($user->registrate($data));
   }
 
 }

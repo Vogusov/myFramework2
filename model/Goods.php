@@ -14,6 +14,14 @@ class Goods
       $query, []);
   }
 
+  public static function getAllWithDeleted()
+  {
+    $query = "SELECT * FROM `goods` where `deleted`;";
+
+    return Db::getInstance()->select(
+      $query, []);
+  }
+
 
   public static function getProduct($productId)
   {

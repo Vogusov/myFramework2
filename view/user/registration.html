@@ -10,7 +10,7 @@
 
 {{ content_data.message }}
 
-<form method="post">
+<form id="form-reg" method="post">
   <fieldset>
     <legend>Данные для регистрации</legend>
     <p>Введите свой логин:</p>
@@ -34,7 +34,7 @@
   </fieldset>
   
   
-  <p><input id="regist" type="submit" name="reg" value="Зарегистрироваться"/></p>
+  <p><input id="regist" class="js-regist" type="submit" name="reg" value="Зарегистрироваться"/></p>
 </form>
 {% endblock %}
 

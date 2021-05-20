@@ -6,10 +6,13 @@
 {% endblock %}
 
 {% block content %}
-{{ content_data.message }}
+
+<p id="message">
+  {{ content_data.message }}
+</p>
 
 <p>
-  <a href="/index.php?path=user/signup">Зарегистрироваться</a>
+  <a href="/index.php?path=user/signuppage">Зарегистрироваться</a>
 </p>
 
 <form action="/index.php?path=user/login" method="post">

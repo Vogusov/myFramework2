@@ -34,7 +34,7 @@ CREATE TABLE `cart` (
   KEY `cart_users_id_fk` (`user_id`),
   CONSTRAINT `cart_goods_id_fk` FOREIGN KEY (`product_id`) REFERENCES `goods` (`id`),
   CONSTRAINT `cart_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (42,2,2,NULL,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-06 17:34:28'),(47,1,4,36,NULL,'2021-04-16 18:16:16'),(48,2,2,36,NULL,'2021-04-17 11:26:27');
+INSERT INTO `cart` VALUES (42,2,2,NULL,'4s9u8u0sm0glgeunrcbj4e3jcbadq5i8','2021-04-06 17:34:28'),(47,1,4,36,NULL,'2021-04-16 18:16:16'),(48,2,2,36,NULL,'2021-04-17 11:26:27'),(66,1,1,2,NULL,'2021-05-12 14:02:46'),(67,1,1,35,NULL,'2021-05-19 14:43:30');
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,15 +83,14 @@ DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(111) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
   `category` int NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
-  `status` int NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `img` varchar(100) DEFAULT NULL,
-  `deleted` enum('0','1') DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `goods_img_uindex` (`img`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `deleted` enum('0','1') DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +99,7 @@ CREATE TABLE `goods` (
 
 LOCK TABLES `goods` WRITE;
 /*!40000 ALTER TABLE `goods` DISABLE KEYS */;
-INSERT INTO `goods` VALUES (1,'Good 1',1001.00,1,'Описание товара 1',1,'ps4.jpg','0'),(2,'Good 2',120.00,2,'Описание товара 2',1,'product_105.jpg','0'),(3,'Good 3',48.00,2,'Описание товара 3',1,'product_102.jpg','0'),(4,'Good 4',100500.00,2,'Описание товара 4',1,'product_1004.jpg','0'),(5,'Good 5',2001.00,3,'Описание товара 5',4,'product_1005.jpg','0'),(6,'Good 6',1020.00,4,'Описание товара 6',1,'product_1006.jpg','0'),(7,'Good 7',2000.00,4,'Описание товара 7',1,'product_1007.jpg','0'),(8,'Good 8',800.00,5,'Описание товара 8',1,'product_1008.jpg','1');
+INSERT INTO `goods` VALUES (1,'Good 1q',1001,1,'Описание товара 1',1,'ps4.jpg','0'),(2,'Good 2',120,2,'Описание товара 2',1,'product_105.jpg','0'),(3,'Good 3',48,2,'Описание товара 3',1,'product_102.jpg','0'),(4,'Good 4',100500,2,'Описание товара 4',1,'product_1004.jpg','0'),(5,'Good 5',2001,3,'Описание товара 5',4,'product_1005.jpg','0'),(6,'Good 6',1020,4,'Описание товара 6',1,'product_1006.jpg','0'),(7,'Good 7',2000,4,'Описание товара 7',1,'product_1007.jpg','0'),(8,'Good 8',800,5,'Описание товара 8',1,'product_1008.jpg','0'),(20,'q',1,1,'q',1,'','1'),(21,'q',1,1,'q',1,'','1');
 /*!40000 ALTER TABLE `goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +201,7 @@ CREATE TABLE `users` (
   `role` int NOT NULL DEFAULT '0',
   `datetime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +210,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (2,'admin','admin@admin.ru','4964040','admin','$2y$10$RU5llEv8w/ELpQcwEqvDI.H2CPcIRgDBaJCwZIykwI0y5sADHkf9.',1,'2021-04-23 13:36:26'),(27,'aaNmae','aa@aa.a','13124235346','aa','$2y$10$IkhPG6S41xVyiAEP4ObZCemj81jVhgkF4hhVcQ1.mdMGvsE3.WLZ2',0,'2021-03-24 13:58:01'),(28,'aaNmae','aa@aa.aa','131242353461','aaa','$2y$10$k51v2oW4BBfJ64Jf47DgO.TyQ7CSZJuqopakda/cIYe2tcXSxEqRy',0,'2021-03-24 13:59:10'),(29,'ssname','ss@ss.s','79869675745','ss','$2y$10$GK6P5HtzcN1FqbF4ny.QVuOB0TwmXoXBf.CRCyFxOeBkM7dafj3m6',0,'2021-03-24 14:02:15'),(30,'vvname','vv@v.v','34567890','vv','$2y$10$FpngshoqEJdBtnHAqkNkw.HzQ8F3./FvfR9lasrkbWCO91GUc6fIC',0,'2021-03-24 14:06:39'),(31,'vvname','vv@v.vv','345678905','vvv','$2y$10$RqTwzfNGP9oTdrUVQ4lRc.e84Ddwbcw6wwJTK41Iub89NzJRJtS.6',0,'2021-03-24 14:12:04'),(32,'xxn','xx@x.x','123143124','xx','$2y$10$Oar.QDmhtQfd2hHTgHQCeO8o5NVtW4qHuoVkwXTN9U4/CBjZbbbOS',0,'2021-03-24 14:20:18'),(33,'xxn','xx@x.xx','123143124435','xxx','$2y$10$vgbBSuHc9eSZXEXHKIvk..RD0y3IPjhEXWYIdrICr7RHCpqc9IiSK',0,'2021-03-24 14:36:46'),(34,'ppName','pp@pp.p','254678098','ppp','$2y$10$oNRfNbaaNXeXbZG4n37RWuHIGrRCZAWOy1JtRWm2CpdGMBfDlTGaS',0,'2021-03-24 14:38:59'),(35,'qq','qq@qq.q','32526534','qq','$2y$10$vYHQt.vTGhEzi9AWmsm/Qe03rKcBPudJCGS6wiKAmj5lXtsmVCwnu',0,'2021-03-25 14:53:36'),(36,'op','op@op.op','4277587','op','$2y$10$1Y9AAAi6SBNuiTh4KADEZO3ORIapTnGNdVu.jgTE/3PVok6KWQEt6',0,'2021-04-16 21:15:18'),(37,'cv','cv@cv.cv','124254536476','cv','$2y$10$PZpzgPvbH1FInXARhLydyOYf7zbncM/i0YvootYYj6jy4bvsbZbOW',0,'2021-04-17 18:11:42'),(38,'testName','test@test.test','990088778898','test','$2y$10$hDqkmU3t5MlAN7321SHRSuzzSwxMJBAjt05aFKvyx5jE4htqzNfby',0,'2021-04-23 13:31:34');
+INSERT INTO `users` VALUES (2,'admin','admin@admin.ru','4964040','admin','$2y$10$RU5llEv8w/ELpQcwEqvDI.H2CPcIRgDBaJCwZIykwI0y5sADHkf9.',1,'2021-04-23 13:36:26'),(27,'aaNmae','aa@aa.a','13124235346','aa','$2y$10$IkhPG6S41xVyiAEP4ObZCemj81jVhgkF4hhVcQ1.mdMGvsE3.WLZ2',0,'2021-03-24 13:58:01'),(28,'aaNmae','aa@aa.aa','131242353461','aaa','$2y$10$k51v2oW4BBfJ64Jf47DgO.TyQ7CSZJuqopakda/cIYe2tcXSxEqRy',0,'2021-03-24 13:59:10'),(29,'ssname','ss@ss.s','79869675745','ss','$2y$10$GK6P5HtzcN1FqbF4ny.QVuOB0TwmXoXBf.CRCyFxOeBkM7dafj3m6',0,'2021-03-24 14:02:15'),(30,'vvname','vv@v.v','34567890','vv','$2y$10$FpngshoqEJdBtnHAqkNkw.HzQ8F3./FvfR9lasrkbWCO91GUc6fIC',0,'2021-03-24 14:06:39'),(31,'vvname','vv@v.vv','345678905','vvv','$2y$10$RqTwzfNGP9oTdrUVQ4lRc.e84Ddwbcw6wwJTK41Iub89NzJRJtS.6',0,'2021-03-24 14:12:04'),(32,'xxn','xx@x.x','123143124','xx','$2y$10$Oar.QDmhtQfd2hHTgHQCeO8o5NVtW4qHuoVkwXTN9U4/CBjZbbbOS',0,'2021-03-24 14:20:18'),(33,'xxn','xx@x.xx','123143124435','xxx','$2y$10$vgbBSuHc9eSZXEXHKIvk..RD0y3IPjhEXWYIdrICr7RHCpqc9IiSK',0,'2021-03-24 14:36:46'),(34,'ppName','pp@pp.p','254678098','ppp','$2y$10$oNRfNbaaNXeXbZG4n37RWuHIGrRCZAWOy1JtRWm2CpdGMBfDlTGaS',0,'2021-03-24 14:38:59'),(35,'qq','qq@qq.q','32526534','qq','$2y$10$vYHQt.vTGhEzi9AWmsm/Qe03rKcBPudJCGS6wiKAmj5lXtsmVCwnu',0,'2021-03-25 14:53:36'),(36,'op','op@op.op','4277587','op','$2y$10$1Y9AAAi6SBNuiTh4KADEZO3ORIapTnGNdVu.jgTE/3PVok6KWQEt6',0,'2021-04-16 21:15:18'),(37,'cv','cv@cv.cv','124254536476','cv','$2y$10$PZpzgPvbH1FInXARhLydyOYf7zbncM/i0YvootYYj6jy4bvsbZbOW',0,'2021-04-17 18:11:42'),(38,'testName','test@test.test','990088778898','test','$2y$10$hDqkmU3t5MlAN7321SHRSuzzSwxMJBAjt05aFKvyx5jE4htqzNfby',0,'2021-04-23 13:31:34'),(40,'rr','rr@rr.rr','2332','rr','$2y$10$q/Vez8eFC7f006Xacl7mS..M0IsndrDdTqHKAVfQNXoogFWD6xERm',0,'2021-05-12 19:21:27'),(41,'yy','yy@yy.yy','1231233','yy','$2y$10$Oikmy7scvsuN4xYYWelrru71m3V.3yGXY4Ca7j2WKSQCYxMZoLZBq',0,'2021-05-19 18:10:37'),(48,'qq','Qq@qq.qq','qq','aDmins','$2y$10$m0DZl4PQHMK1ZOJdLvGy5eawOzjgJJefqY1IfSsexangH/J4trmy6',0,'2021-05-21 01:19:35'),(56,'z','z@z.z','z','z','$2y$10$fsr3o5GD6wWMjm0IHgebU.crc6eB3jWT9LJxaHbdN.oIRAb4mn0nm',0,'2021-05-21 02:06:54');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -224,4 +223,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-12 14:49:11
+-- Dump completed on 2021-05-21  2:21:59
