@@ -110,14 +110,14 @@ $(document).ready(function () {
           $form.prepend(`<p class="error" style="color:red">${data.errors[0]}</p>`)
         }
 
-        // document.location.href = "/index.php?path=user/login";
+        if (data.success) {
+          document.location.href = "/index.php?path=user/login";
+        }
+
 
       },
       'json')
-      .done(function () {
-        document.location.href = "/index.php?path=user/login";
-        // $.get('/index.php?path=user/login', {message: 'Поздравляем! Вы успешно зарегистрировались!'})
-      })
+
 
   })
 
