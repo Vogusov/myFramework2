@@ -48,10 +48,10 @@ class OrderController extends Controller
 
   public function confirmOrder($data) {
 
-    print_r($_SESSION);
+//    print_r($_SESSION);
     if(!isset($_POST['order'])) {
       $products = $this->cart->getAll();
-      print_r($products);
+//      print_r($products);
       unset($_SESSION['confirmOrder']);
       $_SESSION['confirmOrder'] = true;
       return [
@@ -96,7 +96,7 @@ class OrderController extends Controller
   /**
    * @param int $userId
    * @param string $info
-   * @return array $products
+   * @return array
    */
   private function formOrderHandler(int $userId, string $info)
   {
@@ -106,7 +106,7 @@ class OrderController extends Controller
   /**
    * @param int $userId
    *
-   * @return array $usersOrders
+   * @return array
    */
   private function usersOrdersHandler(int $userId)
   {
@@ -116,7 +116,6 @@ class OrderController extends Controller
 
       $orderId = $order['id'];
       $products = $this->orders->ordersProducts($userId, $orderId);
-
       $order['products'] = $products;
     }
     return $orders;

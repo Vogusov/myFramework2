@@ -2,12 +2,15 @@ $(document).ready(function () {
 
 
 //------ AJAX queries -------------
+
+/* Удаление товара */
   btn = $('.js-admin-product-delete')
 
   btn.click(function (e) {
     e.preventDefault();
     productId = $(this).data('id')
     console.log('product to delete: ', `${productId};\n`)
+
 
     $.ajax({
       type: 'POST',

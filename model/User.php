@@ -50,9 +50,15 @@ class User
     );
   }
 
-
-  // проверка формы на валидность пустоту
-  protected function formIsValid($data)
+  /**
+   * Валидация формы регистрации
+   *
+   * @param array Данные формы клиента
+   * @return array Массив с ошибками или массив с валидированными данными для БД
+   *
+   */
+  //
+  protected function formIsValid(array $data)
   {
     $errors = [];
 
@@ -154,12 +160,12 @@ class User
   public function auth(array $data)
   {
     if ($user = $this->loginExists(trim($data['login']))) {
-      echo "Есть юзер с таким логином {$user['login']}. Его ID: {$user['id']}! ";
+//      echo "Есть юзер с таким логином {$user['login']}. Его ID: {$user['id']}! ";
 
       if (password_verify($data['password'], $user['password'])) {
         $_SESSION['logged_user'] = $user['id'];
-        echo 'Пароли совпали! ';
-        print_r($_SESSION['logged_user']);
+//        echo 'Пароли совпали! ';
+//        print_r($_SESSION['logged_user']);
 
         $result['success'] = $this->success = true;
         return $result;

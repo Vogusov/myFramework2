@@ -6,6 +6,7 @@ $(document).ready(function () {
 
   btn.click(function (e) {
     e.preventDefault();
+
     productId = $(this).data('id')
     productName = $(this).data('name')
     console.log('prod: ', `${productId} - ${productName};`)

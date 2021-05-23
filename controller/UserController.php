@@ -87,7 +87,6 @@ class UserController extends Controller
         setcookie('successMessage', 'Поздравляем! Вы успешно зарегистрировались!', time() - 3600, '/');
         print_r($_COOKIE['successMessage']);
       }
-
     $result = [
       'sitename' => $this->sitename,
       'content_data' => [
@@ -96,9 +95,7 @@ class UserController extends Controller
       'title' => 'Вход',
       'view' => $this->view
     ];
-    if ($data['success']) {
-      $result['content_data']['message'] = 'Вы успешно зарегистрировались, войдите под своим именем!';
-    }
+    
     return $result;
   }
 
@@ -131,8 +128,7 @@ public function logout()
 }
 
 
-public
-function account()
+public function account()
 {
   if (isset($_SESSION['logged_user'])) {
     $id = $_SESSION['logged_user'];
