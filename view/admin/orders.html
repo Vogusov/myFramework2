@@ -4,22 +4,16 @@
 
 {{ content_data.text }}
 
-<table>
-  <thead>
-  <tr>
-    <th><p>№ Заказа</p></th>
-    <th><p>№ Заказа</p></th>
-    <th><p>Наименование товаров</p></th>
-    <th><p>Цена</p></th>
-    <th><p>Колличество</p></th>
-    <th><p>Стоимость</p></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tr>
-    <td></td>
-  </tr>
-</table>
+{% for order in admin_content.orders %}
+<div class="order-{{order.id}}">
+  <h3>Заказ № {{order.id}}</h3>
+  <ul>
+    <li>Заказчик: {{ order.user_id }}</li>
+    <li>Информация к заказу: {{ order.additional_info }}</li>
+    <li>Дата офомления: {{ order.date_time_formed }}</li>
+  </ul>
+</div>
+{% endfor %}
 
 {% endblock %}
 

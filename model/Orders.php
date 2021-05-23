@@ -49,29 +49,22 @@ class Orders
 
   }
 
-  public function getOrders($userId)
+  /**
+   * Получаем список всех заказов из БД
+   *
+   * @return array
+   */
+  public static function getAll(): array
   {
-    return Db::getInstance()->select('select orders.id as order_id,
-       orders.additional_info as info,
-       g.name                 as name,
-       g.status as status,
-       product_id,
-       quantity,
-       price,
-       category,
-       description,
-       img,
-       (`quantity` * `price`) as `sum`
-
-from orders
-         inner join orders_products op on orders.id = op.order_id
-         inner join goods g on op.product_id = g.id
-         inner join categories cat on g.category = cat.id_category
-where `orders`.`user_id` = :id',
-      ['id' => $userId]);
+    return Db::getInstance()->select('select * from `orders`', []);
   }
 
-  public function usersOrders($userId) {
+  /**
+   * @param $userId
+   * @return array
+   */
+  public function usersOrders($userId)
+  {
     return Db::getInstance()->select('select * from `orders` where `user_id` = :user_id', ['user_id' => $userId]);
   }
 

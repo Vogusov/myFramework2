@@ -3,13 +3,16 @@
 namespace Fw2\Controller;
 
 use \Fw2\Model\Goods as Goods;
+use Fw2\Model\Orders as Orders;
 
 class AdminController extends Controller
 {
   public array $products;
+  public array $orders;
 //  protected Goods $goods;
   function __construct()
   {
+    $this->orders = Orders::getAll();
     $this->products = Goods::getAllWithDeleted();
     parent::__construct();
     $this->title = 'Панель управления и администрирования';
@@ -37,11 +40,14 @@ class AdminController extends Controller
   }
 
   function orders($data) {
-
+print_r($this->orders);
       return [
         'sitename' => $this->sitename,
         'content_data' => [
           'text' => 'Управление заказами',
+        ],
+        'admin_content' => [
+          'orders' => $this->orders
         ],
         'title' => $this->title,
         'view' => 'admin/orders.html'
